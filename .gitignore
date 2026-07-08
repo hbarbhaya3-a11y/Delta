@@ -1,0 +1,37 @@
+# Node / Vite
+node_modules/
+.vite/
+
+# Build outputs
+dist/
+
+# Runtime logs
+npm-debug.log*
+vite.*.log
+
+# Local recovery artifacts
+backups/
+
+# Environment secrets
+.env
+.env.local
+
+# Firebase cache
+.firebase/
+
+# Claude Code local settings and worktrees
+.claude/
+
+# Playwright MCP logs
+.playwright-mcp/
+
+# Root-level debug screenshots only
+/*.png
+/*.jpg
+/*.jpeg
+
+# VS Code local settings
+.vscode/
+
+# Superpowers brainstorm workspace (runtime artefacts, not source)
+.superpowers/
