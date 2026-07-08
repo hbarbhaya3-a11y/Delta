@@ -1024,6 +1024,12 @@ const UC_STORE_SERVICE_RISK = {
   id: 'uc-store-service-risk',
   title: 'Store Service Risk — At-Risk Replenishment Orders',
   subtitle: 'Protect store service via MEIO rebalance, allocation resequencing, reroute, and selective expedited logistics',
+  color: 'orange',
+  outcome: 'Service attainment protected',
+  outcomeDetail: 'Service attainment, stockout probability, premium freight, recovery time',
+  duration: '24–72 hr service window',
+  variants: '7 levers · 3 recovery plans',
+  agentChain: ['Market Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
   steps: [
     SSR_STEP(1, 'ssr-1', 'Signal Analysis', 'SENSE', 'Market Sentinel'),
     SSR_STEP(2, 'ssr-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
