@@ -1,5 +1,25 @@
-// TwinX for Kroger Supply Chain Resilience — Use Case Definitions
-// Seven end-to-end signal scenarios for supply chain network optimization
+// TwinX for Airline Network Resilience — Use Case Definitions
+// Nine network risk signals for crew scheduling, network disruption, and hub management
+
+import {
+  NETWORK_RISK_SIGNALS,
+  NRS_SIGNAL,
+  NRS_PRECEDENTS,
+  NRS_HYPOTHESIS,
+  NRS_INIT_RECO,
+  NRS_PRIMARY_OBJECTIVES,
+  NRS_PRIMARY_DEFAULT,
+  NRS_SECONDARY_OBJECTIVES,
+  NRS_SECONDARY_DEFAULT,
+  NRS_KPI_OPTIONS,
+  NRS_KPI_DEFAULT,
+  NRS_LEVER_GROUPS,
+  NRS_LEVER_DEFAULTS,
+  NRS_LEVER_SUMMARY,
+  NRS_SCENARIO,
+  NRS_SCOPE,
+  NRS_SIGNAL_PRIORITY,
+} from './networkRiskSignals.js'
 
 // ── Shared Personal Wealth compliance rails ─────────────────────────────────
 const PERSONAL_WEALTH_RAILS = [
@@ -1013,30 +1033,31 @@ const UC_ROLLOVER = {
   ],
 }
 
-// ── Store Service Risk — At-Risk Replenishment Orders (7-screen guided flow) ─
-// Every step renders StoreServiceRiskPanel, selected by panelData.screen.
-const SSR_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
-  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+// ── Network Risk Signals — Crew Scheduling & Network Disruption (7-screen guided flow) ─
+// Every step renders NetworkRiskSignalsPanel, selected by panelData.screen.
+const NRS_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'network_risk_signals', actor, agent,
   headline: label, panelData: { screen: n },
 })
 const UC_STORE_SERVICE_RISK = {
-  id: 'uc-store-service-risk',
-  title: 'Store Service Risk — At-Risk Replenishment Orders',
-  subtitle: 'Protect store service via MEIO rebalance, allocation resequencing, reroute, and selective expedited logistics',
-  color: 'orange',
-  outcome: 'Service attainment protected',
-  outcomeDetail: 'Service attainment, stockout probability, premium freight, recovery time',
-  duration: '24–72 hr service window',
-  variants: '7 levers · 3 recovery plans',
-  agentChain: ['Market Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  id: 'uc-network-risk-operations',
+  title: 'Network Risk Operations — Crew Scheduling & Disruption Prevention',
+  subtitle: 'Protect crew legality, prevent open trips, and minimize cancellations via reserve positioning, pre-cancellation, and cross-hub rebalancing',
+  color: 'red',
+  outcome: 'Open trips prevented · Hub stability maintained',
+  outcomeDetail: 'Flights crewed, crew legality maintained, cancellations avoided, reserve capacity preserved',
+  duration: '24–48 hr forecast window · T-18 hrs live ops',
+  variants: '4 lever groups × 20 levers · 9 prioritized signals',
+  agentChain: ['Network Risk Radar', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  signals: NETWORK_RISK_SIGNALS,
   steps: [
-    SSR_STEP(1, 'ssr-1', 'Signal Analysis', 'SENSE', 'Market Sentinel'),
-    SSR_STEP(2, 'ssr-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
-    SSR_STEP(3, 'ssr-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
-    SSR_STEP(4, 'ssr-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
-    SSR_STEP(5, 'ssr-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
-    SSR_STEP(6, 'ssr-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
-    SSR_STEP(7, 'ssr-7', 'Learn & Save Scenario', 'LEARN', 'Learning System'),
+    NRS_STEP(1, 'nrs-1', 'Signal Analysis', 'SENSE', 'Network Risk Radar'),
+    NRS_STEP(2, 'nrs-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    NRS_STEP(3, 'nrs-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    NRS_STEP(4, 'nrs-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    NRS_STEP(5, 'nrs-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    NRS_STEP(6, 'nrs-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    NRS_STEP(7, 'nrs-7', 'Learn & Save Scenario', 'LEARN', 'Learning System'),
   ],
 }
 
