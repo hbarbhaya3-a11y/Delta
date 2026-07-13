@@ -11,8 +11,14 @@ import {
   IconDownload, IconX, IconFileText,
 } from '@tabler/icons-react'
 import { useUseCase } from '../../../contexts/UseCaseContext'
-import * as D from '../../../data/storeServiceRisk'
+import * as SSR from '../../../data/storeServiceRisk'
+import * as NRS from '../../../data/networkRiskSignals'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
+
+// Select data based on active use case
+function getDataModule(activeUseCase) {
+  return activeUseCase?.id === 'uc-network-risk-operations' ? NRS : SSR
+}
 
 // ── Loading transition — supply-chain context per screen ────────────────────
 function useLoadingPhase(lines) {
@@ -162,43 +168,48 @@ function SectionHead({ icon: Icon, title, color = 'orange' }) {
 
 // ══════════════════ Screen 1 — Signal Analysis ══════════════════════════════
 function Screen1({ onContinue }) {
-  const s = D.SSR_SIGNAL
+  const { activeUseCase } = useUseCase()
+  const D = getDataModule(activeUseCase)
+  const s = D.NRS_SIGNAL || D.SSR_SIGNAL
+  const isNRS = activeUseCase?.id === 'uc-network-risk-operations'
+  const networkTitle = isNRS ? 'Impacted network — crew hubs & reserve pools' : 'Impacted network — supplier → DC → store'
+
   return (
     <Stack gap="md">
-      <Alert color="orange" variant="light" icon={<IconAlertTriangle size={16} />} title={s.sentinel}>
+      <Alert color={isNRS ? 'red' : 'orange'} variant="light" icon={<IconAlertTriangle size={16} />} title={s.sentinel}>
         <Text size="sm">{s.bannerText}</Text>
       </Alert>
 
       {/* Disruption source */}
       <Paper withBorder p="sm" radius="md" style={{ borderLeft: '3px solid var(--mantine-color-red-5)' }}>
-        <Group gap="xs" mb={2}><Badge size="xs" color="red" variant="filled">DISRUPTION SOURCE</Badge><Text size="10px" c="dimmed">Detected {D.SSR_DISRUPTION.detected}</Text></Group>
-        <Text size="xs" fw={600}>{D.SSR_DISRUPTION.source}</Text>
-        <Text size="10px" c="dimmed" mt={2}>Cascade: {D.SSR_DISRUPTION.cascade}</Text>
+        <Group gap="xs" mb={2}><Badge size="xs" color="red" variant="filled">DISRUPTION SOURCE</Badge><Text size="10px" c="dimmed">Detected {(D.NRS_DISRUPTION || D.SSR_DISRUPTION).detected}</Text></Group>
+        <Text size="xs" fw={600}>{(D.NRS_DISRUPTION || D.SSR_DISRUPTION).source}</Text>
+        <Text size="10px" c="dimmed" mt={2}>Cascade: {(D.NRS_DISRUPTION || D.SSR_DISRUPTION).cascade}</Text>
       </Paper>
 
       {/* Impact tiles */}
       <SimpleGrid cols={5} spacing="sm">
-        {D.SSR_IMPACT.map(t => (
+        {(D.NRS_IMPACT || D.SSR_IMPACT).map(t => (
           <Paper key={t.label} withBorder p="sm" radius="md"><Text fw={800} size="lg" c={t.color}>{t.value}</Text><Text size="10px" c="dimmed" lineClamp={2}>{t.label}</Text></Paper>
         ))}
       </SimpleGrid>
 
       {/* Network map */}
       <Paper withBorder p="md" radius="md">
-        <SectionHead icon={IconRoute} title="Impacted network — supplier → DC → store" color="red" />
-        <Box mt="xs"><NetworkMap nodes={D.SSR_NETWORK.nodes} lanes={D.SSR_NETWORK.before} /></Box>
+        <SectionHead icon={IconRoute} title={networkTitle} color="red" />
+        <Box mt="xs"><NetworkMap nodes={(D.NRS_NETWORK || D.SSR_NETWORK).nodes} lanes={(D.NRS_NETWORK || D.SSR_NETWORK).before} /></Box>
       </Paper>
 
       <SimpleGrid cols={2} spacing="md">
-        <Paper withBorder p="md" radius="md" style={{ borderLeft: '3px solid var(--mantine-color-orange-5)' }}>
-          <SectionHead icon={IconRadar} title="Signal summary" />
+        <Paper withBorder p="md" radius="md" style={{ borderLeft: `3px solid var(--mantine-color-${isNRS ? 'red' : 'orange'}-5)` }}>
+          <SectionHead icon={IconRadar} title="Signal summary" color={isNRS ? 'red' : 'orange'} />
           <Table fz="xs" mt="xs">
             <Table.Tbody>
               {s.card.map(r => (
                 <Table.Tr key={r.label}>
                   <Table.Td c="dimmed" w="45%">{r.label}</Table.Td>
                   <Table.Td fw={r.label === 'Severity' ? 700 : 500}>
-                    {r.label === 'Severity' ? <Badge color="orange" size="sm" variant="filled">{r.value}</Badge> : r.value}
+                    {r.label === 'Severity' ? <Badge color={isNRS ? 'red' : 'orange'} size="sm" variant="filled">{r.value}</Badge> : r.value}
                     {r.note && <Text span size="10px" c="dimmed"> {r.note}</Text>}
                   </Table.Td>
                 </Table.Tr>
@@ -212,15 +223,15 @@ function Screen1({ onContinue }) {
         <Paper withBorder p="md" radius="md">
           <SectionHead icon={IconBolt} title="Signal detail" />
           <Text size="xs" c="dimmed" mt="xs" mb="xs">{s.detail}</Text>
-          <Text size="xs" fw={600} mb={4}>Triggered by three converging conditions:</Text>
+          <Text size="xs" fw={600} mb={4}>{isNRS ? 'Triggered by converging operational risks:' : 'Triggered by three converging conditions:'}</Text>
           <List size="xs" type="ordered" spacing={4}>{s.conditions.map((c, i) => <List.Item key={i}>{c}</List.Item>)}</List>
           <Text size="10px" c="dimmed" mt="xs">{s.conditionsNote}</Text>
         </Paper>
       </SimpleGrid>
 
-      <Paper withBorder radius="md" p="md" style={{ borderLeft: '3px solid var(--mantine-color-indigo-5)', background: 'var(--mantine-color-indigo-light)' }}>
-        <Group gap="xs" mb={4}><ThemeIcon size={22} radius="md" variant="gradient" gradient={{ from: 'indigo', to: 'cyan', deg: 135 }}><IconTargetArrow size={13} color="white" /></ThemeIcon><Text fw={700} size="sm">Recommended Hypothesis</Text></Group>
-        <Text size="sm" style={{ lineHeight: 1.7 }}>{D.SSR_HYPOTHESIS}</Text>
+      <Paper withBorder radius="md" p="md" style={{ borderLeft: `3px solid var(--mantine-color-${isNRS ? 'red' : 'indigo'}-5)`, background: `var(--mantine-color-${isNRS ? 'red' : 'indigo'}-light)` }}>
+        <Group gap="xs" mb={4}><ThemeIcon size={22} radius="md" variant="gradient" gradient={{ from: isNRS ? 'red' : 'indigo', to: isNRS ? 'orange' : 'cyan', deg: 135 }}><IconTargetArrow size={13} color="white" /></ThemeIcon><Text fw={700} size="sm">Recommended Hypothesis</Text></Group>
+        <Text size="sm" style={{ lineHeight: 1.7 }}>{(D.NRS_HYPOTHESIS || D.SSR_HYPOTHESIS)}</Text>
       </Paper>
       <ContinueButton onClick={onContinue} label="Continue to Objectives" />
     </Stack>
@@ -229,34 +240,37 @@ function Screen1({ onContinue }) {
 
 // ══════════════════ Screen 2 — Objectives & KPIs ════════════════════════════
 function Screen2({ ws, setWs, onContinue }) {
-  const primary = ws.ssrPrimary ?? D.SSR_PRIMARY_DEFAULT
-  const secondary = ws.ssrSecondary ?? D.SSR_SECONDARY_DEFAULT
-  const kpis = ws.ssrKpis ?? D.SSR_KPI_DEFAULT
+  const { activeUseCase } = useUseCase()
+  const D = getDataModule(activeUseCase)
+  const isNRS = activeUseCase?.id === 'uc-network-risk-operations'
+  const primary = ws.ssrPrimary ?? (D.NRS_PRIMARY_DEFAULT || D.SSR_PRIMARY_DEFAULT)
+  const secondary = ws.ssrSecondary ?? (D.NRS_SECONDARY_DEFAULT || D.SSR_SECONDARY_DEFAULT)
+  const kpis = ws.ssrKpis ?? (D.NRS_KPI_DEFAULT || D.SSR_KPI_DEFAULT)
   return (
     <Stack gap="md">
       <Alert color="blue" variant="light" icon={<IconTargetArrow size={16} />}>
         <Text size="sm">Define scenario objective, constraints, and success KPIs — TwinX will align the simulation pipeline to this objective.</Text>
       </Alert>
       <Paper withBorder p="md" radius="md">
-        <SectionHead icon={IconTargetArrow} title="Primary objective" />
-        <Select mt="xs" data={D.SSR_PRIMARY_OBJECTIVES.map(o => o.value)} value={primary}
+        <SectionHead icon={IconTargetArrow} title="Primary objective" color={isNRS ? 'red' : 'orange'} />
+        <Select mt="xs" data={(D.NRS_PRIMARY_OBJECTIVES || D.SSR_PRIMARY_OBJECTIVES).map(o => o.value)} value={primary}
           onChange={v => setWs(s => ({ ...s, ssrPrimary: v }))} allowDeselect={false}
-          description={D.SSR_PRIMARY_OBJECTIVES.find(o => o.value === primary)?.desc} />
+          description={(D.NRS_PRIMARY_OBJECTIVES || D.SSR_PRIMARY_OBJECTIVES).find(o => o.value === primary)?.desc} />
       </Paper>
       <Paper withBorder p="md" radius="md">
-        <SectionHead icon={IconTargetArrow} title="Secondary objective" color="violet" />
-        <MultiSelect mt="xs" data={D.SSR_SECONDARY_OBJECTIVES.map(o => o.value)} value={secondary}
+        <SectionHead icon={IconTargetArrow} title="Secondary objective" color={isNRS ? 'red' : 'violet'} />
+        <MultiSelect mt="xs" data={(D.NRS_SECONDARY_OBJECTIVES || D.SSR_SECONDARY_OBJECTIVES).map(o => o.value)} value={secondary}
           onChange={v => setWs(s => ({ ...s, ssrSecondary: v }))} clearable searchable />
       </Paper>
       <Paper withBorder p="md" radius="md">
-        <SectionHead icon={IconChartBar} title="Success KPIs" color="teal" />
-        <MultiSelect mt="xs" data={D.SSR_KPI_OPTIONS.map(k => k.value)} value={kpis}
+        <SectionHead icon={IconChartBar} title="Success KPIs" color={isNRS ? 'red' : 'teal'} />
+        <MultiSelect mt="xs" data={(D.NRS_KPI_OPTIONS || D.SSR_KPI_OPTIONS).map(k => k.value)} value={kpis}
           onChange={v => setWs(s => ({ ...s, ssrKpis: v }))} clearable searchable />
-        <Group gap={6} mt="sm" wrap="wrap">{kpis.map(k => <Badge key={k} size="xs" color="teal" variant="light">{k}</Badge>)}</Group>
+        <Group gap={6} mt="sm" wrap="wrap">{kpis.map(k => <Badge key={k} size="xs" color={isNRS ? 'red' : 'teal'} variant="light">{k}</Badge>)}</Group>
       </Paper>
       <Paper withBorder p="md" radius="md" style={{ background: 'var(--mantine-color-default-hover)' }}>
         <Text size="xs" fw={700} mb={4}>Scenario summary</Text>
-        <Text size="xs" c="dimmed">Protect store service across at-risk replenishment orders while minimizing premium freight and using available network inventory before expediting.</Text>
+        <Text size="xs" c="dimmed">{isNRS ? 'Protect crew legality, prevent open trips, and minimize cancellations while preserving reserve capacity and containing hub disruption risk.' : 'Protect store service across at-risk replenishment orders while minimizing premium freight and using available network inventory before expediting.'}</Text>
         <Text size="xs" mt="xs"><b>Primary:</b> {primary}</Text>
         <Text size="xs"><b>Secondary:</b> {secondary.join(' + ') || '—'}</Text>
         <Text size="xs"><b>KPIs:</b> {kpis.join(', ') || '—'}</Text>
@@ -268,9 +282,12 @@ function Screen2({ ws, setWs, onContinue }) {
 
 // ══════════════════ Screen 3 — Simulation Levers ════════════════════════════
 function Screen3({ ws, setWs, onContinue }) {
-  const levers = ws.ssrLevers ?? D.SSR_LEVER_DEFAULTS
-  const setLever = (id, v) => setWs(s => ({ ...s, ssrLevers: { ...(s.ssrLevers ?? D.SSR_LEVER_DEFAULTS), [id]: v } }))
-  const reset = () => setWs(s => ({ ...s, ssrLevers: { ...D.SSR_LEVER_DEFAULTS } }))
+  const { activeUseCase } = useUseCase()
+  const D = getDataModule(activeUseCase)
+  const isNRS = activeUseCase?.id === 'uc-network-risk-operations'
+  const levers = ws.ssrLevers ?? (D.NRS_LEVER_DEFAULTS || D.SSR_LEVER_DEFAULTS)
+  const setLever = (id, v) => setWs(s => ({ ...s, ssrLevers: { ...(s.ssrLevers ?? (D.NRS_LEVER_DEFAULTS || D.SSR_LEVER_DEFAULTS)), [id]: v } }))
+  const reset = () => setWs(s => ({ ...s, ssrLevers: { ...(D.NRS_LEVER_DEFAULTS || D.SSR_LEVER_DEFAULTS) } }))
   return (
     <Stack gap="md">
       <Group justify="space-between">
@@ -278,7 +295,7 @@ function Screen3({ ws, setWs, onContinue }) {
         <Button size="xs" variant="light" color="gray" leftSection={<IconRefresh size={12} />} onClick={reset}>Reset to recommended</Button>
       </Group>
       <Alert color="green" variant="light" p="xs"><Text size="xs">All levers are pre-set to their <b>recommended</b> values. Adjust any lever to explore alternatives, then run the scenario.</Text></Alert>
-      {D.SSR_LEVER_GROUPS.map(g => (
+      {(D.NRS_LEVER_GROUPS || D.SSR_LEVER_GROUPS).map(g => (
         <Paper key={g.group} withBorder p="md" radius="md" style={{ borderLeft: `3px solid var(--mantine-color-${g.color}-5)` }}>
           <Text fw={700} size="xs" tt="uppercase" c={g.color} mb="xs" style={{ letterSpacing: '0.05em' }}>Group {g.group} — {g.title}</Text>
           <Stack gap="sm">

@@ -1034,9 +1034,9 @@ const UC_ROLLOVER = {
 }
 
 // ── Network Risk Signals — Crew Scheduling & Network Disruption (7-screen guided flow) ─
-// Every step renders NetworkRiskSignalsPanel, selected by panelData.screen.
+// Every step renders StoreServiceRiskPanel with network risk signals data, selected by panelData.screen.
 const NRS_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
-  id, label, stage, page: 'market-signals', panelType: 'network_risk_signals', actor, agent,
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
   headline: label, panelData: { screen: n },
 })
 const UC_STORE_SERVICE_RISK = {
