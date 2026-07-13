@@ -95,10 +95,10 @@ function TopHeader({ navCollapsed, onToggleNav, isWorkflowActive, onExitWorkflow
           </Box>
           <Stack gap={0}>
             <Text size="md" fw={700} lh={1.1} style={{ letterSpacing: '-0.01em' }}>
-              Supply OS for Kroger Supply Chain Resilience
+              Network OS for Delta Operations Resilience
             </Text>
             <Text size="10px" c="dimmed" lh={1.2} style={{ letterSpacing: '0.04em' }}>
-              From static supply plans to adaptive network decision intelligence · Powered by TwinX™
+              From static schedules to adaptive network decision intelligence · Powered by TwinX™
             </Text>
           </Stack>
         </Group>
