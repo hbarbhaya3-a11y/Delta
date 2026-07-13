@@ -576,6 +576,16 @@ export const NRS_SAVE = {
   tags: ['network-risk', 'crew-protection', 'hub-closure', 'weather-response', 'cascade-prevention'],
 }
 
+export const NRS_LEARN = {
+  episodeTitle: 'Network Disruption Response — Episode #3',
+  engagement: { scenarioCreated: 1, approvalsRequired: 3, executionsSuccessful: 1 },
+  action: { crewDispatched: 34, flightsProtected: 43, preCapCancellations: 6 },
+  aum: { misconnectsAvoided: 2200, passengerExperienceImprovement: 91, cascadePrevented: true },
+  pnl: { revenueProtected: 940000, costOfAction: 240000, netBenefit: 700000 },
+  modelUpdate: { priorLabel: 'Hub closure cascade prior', priorBefore: 0.85, priorAfter: 0.35, twinsEnriched: 47, episodeNumber: 3, episodeContext: 'Network Disruption Response · 24-hr window · 3 decision hubs' },
+  outputTracking: { totalSimulations: 1000, decisionsApproved: 1, executionsCompleted: 1, feedbackReceived: 89 },
+}
+
 // ── Primary Signal for Screen 1: Network Risk Radar ────────────────────────────
 export const NRS_SIGNAL = {
   sentinel: 'Network Risk Radar',
