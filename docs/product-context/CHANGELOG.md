@@ -5,6 +5,23 @@
 
 ---
 
+## Session 8 — Signal 2 (Hub Closure Likelihood) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 10.34s
+
+### Added
+- **Signal 2 — Hub Closure Likelihood** now has its own dedicated 7-screen deep-dive use case `uc-hub-closure` (`src/data/scenarioHubClosure.js`, `SHC_*`), following the Scenario B pattern. Scenario: severe thunderstorms + active ATC ground delay program at ATL (T-30h→T-6h), 72% closure likelihood, 88% forecast confidence, 184 exposed flights / 52 pairings, -38% departure throughput, 26,300 pax exposed, Pre-Level 0 → Level 0 forming.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics, weather/external breakdown (via the multi-hub table), cascade logic (L0 likely / L1 possible / L2 not yet), root-cause breakdown, historical episodes.
+  - Screens 2–7: objectives/KPIs (stability 40 / CX 30 / cost 15 / resource 15), 9 preventive levers across 4 groups, summary + assumptions, 3 ranked recommendations (Pre-cancel + Reserve / Delay + Full Coverage / Alternate Hub), OCC multi-role approval, and test & learn producing the "ATL Weather Hub Closure Stabilization" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-hub-closure` → `SHC`), added `UC_HUB_CLOSURE` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 2 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS[1]`): `linkedUseCaseId` now `uc-hub-closure`; 72% closure likelihood, 88% confidence, 184 flights / 52 pairings, T-30h→T-6h window, refreshed trend. Catalog def `SIGNAL_HUB_CLOSURE` given concrete values.
+
+### Watch List
+- Signals 1 and 5 (shared UC1 + bespoke) and now Signal 2 have dedicated flows; the remaining six signals still route to UC1. Follow the same Scenario B pattern to add more.
+
 ## Session 7 — Signal 1 (Network Risk Radar) ATL Evening-Bank Deep Dive — 2026-07-14
 
 ### Build Status
