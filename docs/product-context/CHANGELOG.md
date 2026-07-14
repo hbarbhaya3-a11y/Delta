@@ -5,6 +5,23 @@
 
 ---
 
+## Session 14 — Signal 4 (Reserve Burn Rate Acceleration) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 11.91s
+
+### Added
+- **Signal 4 — Reserve Burn Rate Acceleration** now has its own dedicated 7-screen deep-dive use case `uc-reserve-burn` (`src/data/scenarioReserveBurn.js`, `SRB_*`), following the shared scenario pattern. Scenario: multi-hub reserve-depletion event across ATL/JFK/DTW/MSP driven by ATL weather, an open-trip inflow spike (8.4/hr vs 5.1/hr closure), and crew sick calls. Network burn 11.8/hr, coverage 0.72x (0.47x ATL), net open-trip growth +3.3/hr, 61 feasible reserves, Level 1 probability 57%, ATL exhaustion ETA 3h 10m, 7,850 pax exposed, L0 active / L1 partially active / L2 watch. Network resource-control posture with a supply + demand lever split.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics (inflow/closure, feasible reserves, 6h demand, donor risks, cost), multi-hub reserve table (ATL source / JFK propagation / DTW·MSP donor with coverage + burn + ETA), cascade logic (L0 active / L1 active-partial / L2 watch), root-cause breakdown (crew 46 / external 21 / network 17 / aircraft 8 / pax 8), historical episodes.
+  - Screens 2–7: objectives/KPIs (network stability 35 / reserve efficiency 25 / CX 20 / cost 10 / restart 10), 17 levers across 4 groups (crew supply / network demand / aircraft / pax+cost+recovery), summary + assumptions with a 0.95x donor guardrail, 3 ranked recommendations (Hybrid rebalance + thinning / Pure rebalance / Incentive-heavy), OCC multi-role SLA-tracked approval, and test & learn producing the "Multi-Hub Reserve Burn Containment — ATL/JFK/DTW/MSP" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-reserve-burn` → `SRB`), added `UC_RESERVE_BURN` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 4 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-reserve-burn`; primary metric switched to the 0.72x reserve coverage ratio (burn 11.8/hr · ATL exhaustion 3h 10m), 86% confidence, ATL/JFK/DTW/MSP, refreshed trend and tags. Catalog def `SIGNAL_RESERVE_BURN` given concrete multi-hub containment values.
+
+### Watch List
+- **All 9 network-risk signals now have dedicated 7-screen deep-dive flows.** UC1 (`uc-network-risk-operations`) remains the aggregate radar entry point; no signal falls back to the generic flow.
+
 ## Session 13 — Signal 3 (Uncovered Trip Detected) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status
