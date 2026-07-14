@@ -208,8 +208,6 @@ export default function UseCaseCatalog({ onRunScenario }) {
                           <IconUsers size={11} />
                           <Text size="10px">{sig.metricValue} {sig.metricUnit}</Text>
                         </Group>
-                        <Text size="10px" c="dimmed">·</Text>
-                        <Text size="10px">{sig.precedents} precedents</Text>
                       </Group>
                       <Group justify="space-between" align="center">
                         <Text size="9px" c="dimmed">{sig.sourceChip.split('·')[0].trim()}</Text>
@@ -253,15 +251,6 @@ export default function UseCaseCatalog({ onRunScenario }) {
                   <Text fw={800} size="xl" c={selectedSignal.severityColor}>{selectedSignal.metricValue}</Text>
                   <Text size="10px" c="dimmed">{selectedSignal.metricStripLabel}</Text>
                   <Text size="10px" c="dimmed">{selectedSignal.metricSub}</Text>
-                </Box>
-                <Box>
-                  <Text fw={800} size="xl" c={selectedSignal.precedentNote ? 'orange' : 'dark'}>
-                    {selectedSignal.precedents}
-                  </Text>
-                  <Text size="10px" c="dimmed">Historical precedents</Text>
-                  {selectedSignal.precedentNote && (
-                    <Text size="10px" c="orange">{selectedSignal.precedentNote}</Text>
-                  )}
                 </Box>
               </Group>
 
