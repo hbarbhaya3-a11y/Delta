@@ -17,6 +17,8 @@ import * as SCB from '../../../data/scenarioBStranding'
 import * as SHC from '../../../data/scenarioHubClosure'
 import * as SCP from '../../../data/scenarioCrossHub'
 import * as SMX from '../../../data/scenarioMisconnect'
+import * as STC from '../../../data/scenarioTailCrew'
+import * as SPG from '../../../data/scenarioPolicyGate'
 import * as SUT from '../../../data/scenarioUncoveredTrip'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
 
@@ -30,6 +32,8 @@ const MODULES = {
   'uc-hub-closure': { prefix: 'SHC', mod: SHC },
   'uc-cross-hub-propagation': { prefix: 'SCP', mod: SCP },
   'uc-misconnect-exposure': { prefix: 'SMX', mod: SMX },
+  'uc-tail-crew-sync': { prefix: 'STC', mod: STC },
+  'uc-policy-feasibility-gate': { prefix: 'SPG', mod: SPG },
   'uc-uncovered-trip': { prefix: 'SUT', mod: SUT },
 }
 function useData() {

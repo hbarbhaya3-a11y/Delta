@@ -1142,6 +1142,33 @@ const UC_CROSS_HUB = {
   ],
 }
 
+// ── Signal 9 — Binding Policy / Contract Constraint Flag (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with policy feasibility-gate data (scenarioPolicyGate.js).
+const SPG_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_POLICY_GATE = {
+  id: 'uc-policy-feasibility-gate',
+  title: 'ATL Policy Feasibility Gate — JFK/BOS Spillover',
+  subtitle: 'Multi-hub recovery plan blocked by legality, qualification, maintenance, and policy gates — filter infeasible options, execute compliant recovery first',
+  color: 'red',
+  outcome: 'Compliant recovery released · audit complete',
+  outcomeDetail: 'Infeasible options removed, hard gates passed, exceptions minimized, decisions fully auditable before execution',
+  duration: 'Before decision approval · T-2h 25m to ATL bank',
+  variants: '4 lever groups × 16 levers (some hard gates) · compliant / high-cost / exception options',
+  agentChain: ['Policy Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SPG_STEP(1, 'spg-1', 'Signal Deep Dive', 'SENSE', 'Policy Sentinel'),
+    SPG_STEP(2, 'spg-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SPG_STEP(3, 'spg-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SPG_STEP(4, 'spg-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SPG_STEP(5, 'spg-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SPG_STEP(6, 'spg-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SPG_STEP(7, 'spg-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Signal 7 — Passenger Misconnect Exposure (7-screen deep dive) ───
 // Renders StoreServiceRiskPanel with connection-protection data (scenarioMisconnect.js).
 const SMX_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
@@ -1196,6 +1223,33 @@ const UC_UNCOVERED_TRIP = {
   ],
 }
 
+// ── Signal 8 — Tail-Crew Synchronization Gap (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with tail-crew sync data (scenarioTailCrew.js).
+const STC_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_TAIL_CREW = {
+  id: 'uc-tail-crew-sync',
+  title: 'ATL Tail-Crew Synchronization Run — JFK/BOS Spillover',
+  subtitle: 'Aircraft/crew readiness mismatch across ATL → JFK → BOS (MCO donor) — a tail-only or crew-only fix still fails; synchronize both sides with maintenance, gate, and next-day restart feasibility',
+  color: 'yellow',
+  outcome: 'Readiness gap closed · split pairs resolved',
+  outcomeDetail: 'Crew and tail readiness synchronized, legality preserved, idle-hours and misconnects cut, BOS next-day restart protected',
+  duration: 'T-4h to first departure · live refresh 10 min · 24–72h restart watch',
+  variants: '4 lever groups × 15 levers · tail-swap / crew-reassign / delay strategies',
+  agentChain: ['Sync Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    STC_STEP(1, 'stc-1', 'Signal Deep Dive', 'SENSE', 'Sync Sentinel'),
+    STC_STEP(2, 'stc-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    STC_STEP(3, 'stc-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(4, 'stc-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(5, 'stc-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    STC_STEP(6, 'stc-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    STC_STEP(7, 'stc-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1228,6 +1282,8 @@ export const useCases = [
   UC_HUB_CLOSURE,
   UC_CROSS_HUB,
   UC_MISCONNECT,
+  UC_TAIL_CREW,
+  UC_POLICY_GATE,
   UC_UNCOVERED_TRIP,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
