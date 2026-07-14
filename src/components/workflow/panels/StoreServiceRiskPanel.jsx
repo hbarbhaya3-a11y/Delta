@@ -20,6 +20,7 @@ import * as SMX from '../../../data/scenarioMisconnect'
 import * as STC from '../../../data/scenarioTailCrew'
 import * as SPG from '../../../data/scenarioPolicyGate'
 import * as SUT from '../../../data/scenarioUncoveredTrip'
+import * as SRB from '../../../data/scenarioReserveBurn'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
 
 // ── Data resolution ─────────────────────────────────────────────────────────
@@ -35,6 +36,7 @@ const MODULES = {
   'uc-tail-crew-sync': { prefix: 'STC', mod: STC },
   'uc-policy-feasibility-gate': { prefix: 'SPG', mod: SPG },
   'uc-uncovered-trip': { prefix: 'SUT', mod: SUT },
+  'uc-reserve-burn': { prefix: 'SRB', mod: SRB },
 }
 function useData() {
   const { activeUseCase } = useUseCase()

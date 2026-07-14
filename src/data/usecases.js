@@ -1250,6 +1250,33 @@ const UC_TAIL_CREW = {
   ],
 }
 
+// ── Signal 4 — Reserve Burn Rate Acceleration (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with reserve-burn containment data (scenarioReserveBurn.js).
+const SRB_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_RESERVE_BURN = {
+  id: 'uc-reserve-burn',
+  title: 'Multi-Hub Reserve Burn Containment — ATL/JFK/DTW/MSP',
+  subtitle: 'Reserves burning faster than open trips close (0.72x coverage, ATL nearest exhaustion) — supply-side rebalance + demand-side thinning under a donor guardrail to prevent Level 1 zero-sum spread',
+  color: 'orange',
+  outcome: 'Exhaustion contained · Level 1 spread prevented',
+  outcomeDetail: 'Reserves rebalanced under guardrail, demand thinned, ATL exhaustion pushed past the window, donor hubs and next-day launch protected',
+  duration: 'First ATL exhaustion threshold in 3h 10m · rolling live refresh',
+  variants: '4 lever groups × 17 levers · hybrid / pure-rebalance / incentive strategies',
+  agentChain: ['Reserve Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SRB_STEP(1, 'srb-1', 'Signal Deep Dive', 'SENSE', 'Reserve Sentinel'),
+    SRB_STEP(2, 'srb-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SRB_STEP(3, 'srb-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SRB_STEP(4, 'srb-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SRB_STEP(5, 'srb-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SRB_STEP(6, 'srb-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SRB_STEP(7, 'srb-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1285,6 +1312,7 @@ export const useCases = [
   UC_TAIL_CREW,
   UC_POLICY_GATE,
   UC_UNCOVERED_TRIP,
+  UC_RESERVE_BURN,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
