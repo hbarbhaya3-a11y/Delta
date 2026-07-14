@@ -210,6 +210,14 @@ export const STC_RECOMMENDATIONS = [
     trigger: 'Ready-tail candidates are maintenance-feasible and the priority is protecting the ATL/JFK bank.',
     leversUsed: 'Swap 3 ready tails · keep original legal crews · resequence 2 rotations · reaccommodate 260 pax',
     impacted: '18 legs · 7 tails · 9 split pairs · 2,740 pax',
+    assignments: [
+      { kind: 'Tail', kindColor: 'orange', resource: 'N557DL (ready)', from: 'ATL spare', to: 'protected rotation', flight: 'DL2381 ATL–JFK 18:30', action: 'Swap in for held N312DL; keep the ready crew on it' },
+      { kind: 'Tail', kindColor: 'orange', resource: 'N621DL, N709DL (ready)', from: 'early ATL rotations', to: '2 protected JFK-bank legs', flight: 'DL1705 ATL–JFK, DL1992 JFK–BOS', action: 'Maintenance-ready swaps to close the readiness gap' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Original legal crews (P-ATL-118, P-ATL-124)', to: 'stay on swapped tails', flight: 'DL2381, DL1705', action: 'Preserve legal crews — "tail swap with same crew"' },
+      { kind: 'Tail', kindColor: 'yellow', resource: '2 downstream rotations', to: 'resequenced', action: 'Protect the BOS next-day restart from a rotation break' },
+      { kind: 'Flight', kindColor: 'grape', resource: '4 protected flights', to: '≤25 min hold', action: 'Delay to align tail readiness with crew' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '260 high-risk pax', to: 'protected connections', action: 'Early reaccommodation, premium first' },
+    ],
     confidence: '86% · best reliability + CX balance',
     whyNot: 'Moderate aircraft coordination overhead.',
     recommends: [
@@ -254,6 +262,12 @@ export const STC_RECOMMENDATIONS = [
     trigger: 'Tail swaps become infeasible; move crew to the aircraft that is ready.',
     leversUsed: 'Move 5 legal crews to ready aircraft · activate 6 reserves · deadhead 4 to cover donor gaps',
     impacted: '18 legs · ready tails · 2,740 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: '5 legal crews (P-ATL-118, P-ATL-124, P-ATL-131, +2)', from: 'held tails', to: 'ready aircraft', flight: 'DL1842 ATL–MCO, DL1705 ATL–JFK', action: 'Move crew to the tail that is ready instead of waiting' },
+      { kind: 'Reserve', kindColor: 'orange', resource: '6 reserves (R-ATL-04…09)', to: 'coverage gaps', action: 'Activate location-feasible reserves' },
+      { kind: 'Crew', kindColor: 'orange', resource: '4 deadhead crew', to: 'donor gaps', action: 'Backfill the gaps the reassignments open' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'At-risk pax', to: 'protected connections', action: 'Reaccommodate where reassignment shifts timing' },
+    ],
     confidence: '79% · fastest crew-side recovery',
     whyNot: 'Higher reserve / deadhead use and donor-gap risk.',
     recommends: [
@@ -296,6 +310,12 @@ export const STC_RECOMMENDATIONS = [
     trigger: 'Maintenance release confidence is high and legality buffers remain safe.',
     leversUsed: 'Delay 6 flights ≤35 min · wait for 2 tail releases · protect premium / critical connections',
     impacted: '18 legs · 6 delayed flights · 2,740 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '6 flights', to: '≤35 min hold', flight: 'DL2381 ATL–JFK, DL1842 ATL–MCO, +4', action: 'Delay to await tail releases while protecting connections' },
+      { kind: 'Tail', kindColor: 'orange', resource: 'N312DL + 1 (in work)', to: 'awaited releases', action: 'Hold for 2 maintenance releases; escalate if a release slips' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Ready crews (P-ATL-118, P-ATL-124)', to: 'held on assigned tails', action: 'Watch legality buffers through the delay' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Premium / critical connections', to: 'protected', action: 'Shield priority journeys during the wait' },
+    ],
     confidence: '72% · lowest swap disruption',
     whyNot: 'Higher legality and passenger risk if a release slips.',
     recommends: [

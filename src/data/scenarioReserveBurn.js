@@ -210,6 +210,13 @@ export const SRB_RECOMMENDATIONS = [
     trigger: 'Burn acceleration has already entered Level 1 risk (57%).',
     leversUsed: 'Rebalance 10 from DTW/MSP · activate 26 ATL/JFK reserves · thin 6 low-criticality flights · protect ATL/JFK banks',
     impacted: '42 exposed flights · 4 hubs · 9 donor risks · 7,850 pax',
+    assignments: [
+      { kind: 'Reserve', kindColor: 'red', resource: '26 ATL/JFK reserves', from: 'ATL + JFK pools', to: 'open trips in the burning banks', action: 'Activate legal + qualified reserves' },
+      { kind: 'Crew', kindColor: 'orange', resource: '10 crew', from: 'DTW / MSP donor pools', to: 'ATL / JFK gaps', action: 'Rebalance only while donor coverage stays ≥0.95x' },
+      { kind: 'Flight', kindColor: 'grape', resource: '6 low-criticality flights', to: 'thinned', action: 'Cut reserve demand at the source' },
+      { kind: 'Tail', kindColor: 'yellow', resource: '3 ready tails', to: 'protected ATL/JFK banks', action: 'Maintenance-ready swap for coupled flights' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '900 at-risk pax', to: 'protected itineraries', action: 'Reaccommodation, premium first' },
+    ],
     confidence: '86% · best overall containment',
     whyNot: 'Moderate customer-visible cancellations from thinning.',
     recommends: [
@@ -254,6 +261,12 @@ export const SRB_RECOMMENDATIONS = [
     trigger: 'Donor-hub coverage is stable and avoiding visible cancellations is the priority.',
     leversUsed: 'Move 14 crew-equiv from DTW/MSP · no proactive cancellations · allow 8 deadheads',
     impacted: '42 exposed flights · 4 hubs · 7,850 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'orange', resource: '14 crew-equiv', from: 'DTW / MSP donor pools', to: 'ATL / JFK open trips', action: 'Pure rebalance while donor coverage stays ≥0.95x' },
+      { kind: 'Crew', kindColor: 'orange', resource: '8 deadhead crew', to: 'coverage gaps', action: 'Reposition to backfill without cancellations' },
+      { kind: 'Reserve', kindColor: 'red', resource: 'ATL/JFK reserves', to: 'open trips as needed', action: 'Activate to hold continuity, no proactive cancels' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Backlog pax', to: 'as-capacity itineraries', action: 'Reaccommodate where timing shifts' },
+    ],
     confidence: '72% · better CX continuity',
     whyNot: 'Higher donor-hub and execution risk; leans on volatile donor capacity.',
     recommends: [
@@ -296,6 +309,12 @@ export const SRB_RECOMMENDATIONS = [
     trigger: 'Policy leaders prefer minimizing planned cancellations despite higher cost.',
     leversUsed: 'Broad incentive trigger · safe + conditional swaps · minimal schedule thinning',
     impacted: '42 exposed flights · 4 hubs · 7,850 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: 'Broad incentive pickups', to: 'critical open trips', action: 'Trigger incentives within the cost cap to draw voluntary coverage' },
+      { kind: 'Crew', kindColor: 'orange', resource: 'Safe + conditional swaps', to: 'open trips', action: 'Cover with on-duty crew before spending reserves' },
+      { kind: 'Flight', kindColor: 'grape', resource: 'Minimal thinning', to: 'protected banks', action: 'Keep planned cancellations to a minimum' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'At-risk pax', to: 'protected connections', action: 'Reaccommodate where coverage slips' },
+    ],
     confidence: '68% · fewest planned cancels',
     whyNot: 'Higher cost and Level 1 risk.',
     recommends: [
