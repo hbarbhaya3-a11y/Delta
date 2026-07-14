@@ -117,10 +117,10 @@ export const SIGNAL_RESERVE_BURN = {
   ready_scenario: 'Reserve Burn Containment Simulation',
 }
 
-// Signal 5: Mid-Rotation Hub Stranding Detected (Scenario B)
+// Signal 5: Mid-Rotation Hub Stranding Detected
 export const SIGNAL_MID_ROTATION_STRANDING = {
   id: 'nrs-5-mid-rotation-stranding',
-  title: 'Mid-Rotation Hub Stranding Detected (Scenario B)',
+  title: 'Mid-Rotation Hub Stranding Detected',
   severity: '🟠 High',
   signal_class: 'Scenario-onset',
   description: 'Detects crews stranded mid-rotation due to hub cancellation. Starting point of Scenario B (Level 0). Remaining legs become open, and repositioning needs create downstream risk.',
@@ -819,7 +819,7 @@ export const NRS_LIVE_SIGNALS = [
     ucId: 'nrs-mid-rotation-stranding',
     linkedUseCaseId: 'uc-scenario-b-stranding',
     severity: 'CRITICAL', severityColor: 'red', stage: 'SENSE',
-    title: 'Mid-Rotation Hub Stranding Detected (Scenario B)',
+    title: 'Mid-Rotation Hub Stranding Detected',
     description: 'Crews stranded mid-rotation at ORD by weather/ATC; remaining legs open, ATL/JFK exposed.',
     detail: 'Scenario B (Level 0 onset, upgraded to Critical as Level 1 activates): ORD outbound cancels, crew is stuck out of domicile needing deadhead, and remaining legs go open. Recovery can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2). Likely root causes: hub cancellation, weather/ATC, aircraft delay.',
     sourceChip: 'CREW · NETWORK · AIRCRAFT · PASSENGER',
