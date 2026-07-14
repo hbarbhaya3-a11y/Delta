@@ -1169,6 +1169,60 @@ const UC_POLICY_GATE = {
   ],
 }
 
+// ── Signal 7 — Passenger Misconnect Exposure (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with connection-protection data (scenarioMisconnect.js).
+const SMX_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_MISCONNECT = {
+  id: 'uc-misconnect-exposure',
+  title: 'ATL → JFK → BOS Connection Protection Run',
+  subtitle: 'ATL bank compression spilling into the JFK late bank and BOS next-day wave — proactive pre-bank optimization + real-time connection protection with a balanced CX + network bias',
+  color: 'orange',
+  outcome: 'Connections protected · network stability preserved',
+  outcomeDetail: 'Critical / premium / international misconnects cut, high-leverage holds only, backlog and cost controlled, JFK spillover and BOS backlog contained',
+  duration: 'Pre-bank T-3h · real-time T-45m to T+20m · 24h backlog watch',
+  variants: '4 lever groups × 19 levers · balanced / reaccom-first / network-first strategies',
+  agentChain: ['Connection Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SMX_STEP(1, 'smx-1', 'Signal Deep Dive', 'SENSE', 'Connection Sentinel'),
+    SMX_STEP(2, 'smx-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SMX_STEP(3, 'smx-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SMX_STEP(4, 'smx-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SMX_STEP(5, 'smx-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SMX_STEP(6, 'smx-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SMX_STEP(7, 'smx-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
+// ── Signal 8 — Tail-Crew Synchronization Gap (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with tail-crew sync data (scenarioTailCrew.js).
+const STC_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_TAIL_CREW = {
+  id: 'uc-tail-crew-sync',
+  title: 'ATL Tail-Crew Synchronization Run — JFK/BOS Spillover',
+  subtitle: 'Aircraft/crew readiness mismatch across ATL → JFK → BOS (MCO donor) — a tail-only or crew-only fix still fails; synchronize both sides with maintenance, gate, and next-day restart feasibility',
+  color: 'yellow',
+  outcome: 'Readiness gap closed · split pairs resolved',
+  outcomeDetail: 'Crew and tail readiness synchronized, legality preserved, idle-hours and misconnects cut, BOS next-day restart protected',
+  duration: 'T-4h to first departure · live refresh 10 min · 24–72h restart watch',
+  variants: '4 lever groups × 15 levers · tail-swap / crew-reassign / delay strategies',
+  agentChain: ['Sync Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    STC_STEP(1, 'stc-1', 'Signal Deep Dive', 'SENSE', 'Sync Sentinel'),
+    STC_STEP(2, 'stc-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    STC_STEP(3, 'stc-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(4, 'stc-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(5, 'stc-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    STC_STEP(6, 'stc-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    STC_STEP(7, 'stc-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1200,6 +1254,8 @@ export const useCases = [
   UC_SCENARIO_B,
   UC_HUB_CLOSURE,
   UC_CROSS_HUB,
+  UC_MISCONNECT,
+  UC_TAIL_CREW,
   UC_POLICY_GATE,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,

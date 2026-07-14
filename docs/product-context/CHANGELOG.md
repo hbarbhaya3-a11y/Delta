@@ -5,7 +5,7 @@
 
 ---
 
-## Session 10 — Signal 9 (Binding Policy / Contract Constraint) Dedicated Deep Dive — 2026-07-14
+## Session 12 — Signal 9 (Binding Policy / Contract Constraint) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status
 - `npm run build` — **PASSED** — 0 errors, built in 9.15s
@@ -20,7 +20,41 @@
 - **Signal 9 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-policy-feasibility-gate`; 16 binding constraints, 23 of 64 options removed, Tier 2, 89% confidence, refreshed trend. Catalog def `SIGNAL_POLICY_CONSTRAINT` given concrete values.
 
 ### Watch List
-- Dedicated flows now exist for Signals 1, 2, 5, 6, and 9; the remaining four signals (3, 4, 7, 8) still route to UC1. Follow the same Scenario B pattern to add more.
+- Dedicated flows now exist for Signals 1, 2, 5, 6, 7, 8, and 9; the remaining two signals (3, 4) still route to UC1. Follow the same Scenario B pattern to add more.
+
+## Session 11 — Signal 8 (Tail-Crew Synchronization Gap) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 12.39s
+
+### Added
+- **Signal 8 — Tail-Crew Synchronization Gap** now has its own dedicated 7-screen deep-dive use case `uc-tail-crew-sync` (`src/data/scenarioTailCrew.js`, `STC_*`), following the Scenario B / Cross-Hub pattern. Scenario: multi-hub aircraft/crew readiness mismatch ATL → JFK → BOS (MCO donor) — crew ready without a released tail (DL2381 ATL–JFK) and a ready tail without positioned crew (DL1842 ATL–MCO). +68 min readiness gap, 18 affected legs, 9 aircraft/crew split pairs, 7 impacted tails, 4 feasible swaps, 3 maintenance gates, 410 misconnects, 6 next-day departures exposed, 81% confidence, L0 active / L1 watch / L2 next-day watch.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics, multi-hub tail-crew coupling table (ATL/JFK/BOS/MCO), cascade logic (L0 mismatch / L1 donor risk / L2 restart watch), root-cause breakdown (aircraft 34 / crew 25 / network 18 / gate 10 / pax 8 / ATC 5), historical episodes.
+  - Screens 2–7: objectives/KPIs (reliability 35 / resource 25 / CX 20 / cost 10 / restart 10), 15 synchronization levers across 4 groups (aircraft / crew / network / pax+cost+recovery), summary + assumptions, 3 ranked recommendations (Tail swap + crew preservation / Crew reassignment / Controlled delay + release wait), OCC multi-role approval, and test & learn producing the "ATL Tail-Crew Sync — JFK/BOS Spillover Containment" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-tail-crew-sync` → `STC`), added `UC_TAIL_CREW` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 8 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-tail-crew-sync`; primary metric switched to the +68 min readiness gap (18 legs · 9 split pairs · 7 tails), 81% confidence, ATL/JFK/BOS/MCO, T-4h + 10-min live-refresh window, refreshed trend. Catalog def `SIGNAL_TAIL_CREW_SYNC` given concrete crew-aircraft-sync values.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 5, 6, 7, and 8; the remaining three signals (3, 4, 9) still route to UC1. Follow the same pattern to add more.
+
+## Session 10 — Signal 7 (Passenger Misconnect Exposure) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 7,693 modules, 0 errors, built in 14.38s
+
+### Added
+- **Signal 7 — Passenger Misconnect Exposure** now has its own dedicated 7-screen deep-dive use case `uc-misconnect-exposure` (`src/data/scenarioMisconnect.js`, `SMX_*`), following the Scenario B / Cross-Hub pattern. Scenario: multi-hub connection cascade ATL → JFK → BOS — ATL 17:30–20:30 bank compression spilling into the JFK 21:00–23:30 late bank and the BOS next-day first wave. Proactive pre-bank optimization + real-time connection protection, passenger segmentation, balanced CX + network bias. 1,460 misconnects at risk, 386 critical, 214 premium, 132 international, 87% confidence, 550-seat reaccommodation shortfall, L0 active ATL / L1 watch JFK / L2 watch BOS.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics, multi-hub propagation table (ATL/JFK/BOS banks), cascade logic (L0 active / L1 watch / L2 watch), root-cause breakdown (network 28 / crew 22 / aircraft 17 / gate 14 / ATC 11 / pax 8), historical episodes.
+  - Screens 2–7: objectives/KPIs (CX 35 / network stability 35 / cost 15 / feasibility 15), 19 protection levers across 4 groups (passenger / network / crew+aircraft / gate+cost+recovery), summary + assumptions, 3 ranked recommendations (Balanced / Reaccommodation-first / Network stability-first), OCC multi-role approval, and test & learn producing the "ATL → JFK → BOS Connection Protection — Balanced CX + Network" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-misconnect-exposure` → `SMX`), added `UC_MISCONNECT` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 7 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-misconnect-exposure`; 1,460 misconnects (386 critical · 214 premium · 132 intl), 87% confidence, ATL/JFK/BOS banks, proactive T-3h + real-time T-45m→T+20m window, refreshed trend. Catalog def `SIGNAL_MISCONNECT_EXPOSURE` given concrete ATL→JFK→BOS values.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 5, 6, and 7; the remaining four signals (3, 4, 8, 9) still route to UC1. Follow the same pattern to add more.
 
 ## Session 9 — Signal 6 (Cross-Hub Propagation) Dedicated Deep Dive — 2026-07-14
 
