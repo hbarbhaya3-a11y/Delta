@@ -1115,6 +1115,33 @@ const UC_HUB_CLOSURE = {
   ],
 }
 
+// ── Signal 6 — Cross-Hub Propagation Probability (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with cross-hub cascade data (scenarioCrossHub.js).
+const SCP_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_CROSS_HUB = {
+  id: 'uc-cross-hub-propagation',
+  title: 'ORD → ATL → JFK → BOS Cross-Hub Contamination Run',
+  subtitle: 'Multi-hub cascade already in Level 1 zero-sum crew swaps — contain at source, block donor cannibalization, prevent Level 2 next-day failure',
+  color: 'red',
+  outcome: 'Cascade contained · Level 2 prevented',
+  outcomeDetail: 'Donor pulls blocked, guardrails held, crew/tails repositioned, next-day BOS/JFK launch protected',
+  duration: '6–24h containment · 24–72h restart watch',
+  variants: '4 lever groups × 16 levers · contain / support / reset strategies',
+  agentChain: ['Cascade Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SCP_STEP(1, 'scp-1', 'Signal Deep Dive', 'SENSE', 'Cascade Sentinel'),
+    SCP_STEP(2, 'scp-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SCP_STEP(3, 'scp-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SCP_STEP(4, 'scp-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SCP_STEP(5, 'scp-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SCP_STEP(6, 'scp-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SCP_STEP(7, 'scp-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1145,6 +1172,7 @@ export const useCases = [
   UC_STORE_SERVICE_RISK,
   UC_SCENARIO_B,
   UC_HUB_CLOSURE,
+  UC_CROSS_HUB,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
