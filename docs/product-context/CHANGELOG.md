@@ -5,6 +5,23 @@
 
 ---
 
+## Session 9 — Signal 6 (Cross-Hub Propagation) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 8.77s
+
+### Added
+- **Signal 6 — Cross-Hub Propagation Probability** now has its own dedicated 7-screen deep-dive use case `uc-cross-hub-propagation` (`src/data/scenarioCrossHub.js`, `SCP_*`), following the Scenario B pattern. Scenario: multi-hub cascade ORD → ATL → JFK → BOS, already in Level 1 zero-sum crew swaps with Level 2 rising — 68% propagation, 89% confidence, 4 affected hubs, 23 non-source open trips, reserve coverage ATL 0.69x / JFK 0.81x / BOS 0.92x, 17 next-day departures exposed.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics, multi-hub propagation table (ORD/ATL/JFK/BOS roles), cascade logic (L0 active / L1 active / L2 watch-rising), root-cause breakdown, historical episodes.
+  - Screens 2–7: objectives/KPIs (network stability 35 / restart 25 / CX 20 / resource 10 / cost 10), 16 containment levers across 4 groups, summary + assumptions, 3 ranked recommendations (Contain at source / Controlled support / Network reset), OCC multi-role approval, and test & learn producing the "ORD → ATL → JFK → BOS Cross-Hub Containment" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-cross-hub-propagation` → `SCP`), added `UC_CROSS_HUB` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 6 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-cross-hub-propagation`; 68% propagation, 89% confidence, 4 hubs / 23 non-source open trips, 6–24h + 24–72h window, refreshed trend. Catalog def `SIGNAL_CROSS_HUB_PROPAGATION` given concrete values.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 5, and 6; the remaining five signals still route to UC1. Follow the same Scenario B pattern to add more.
+
 ## Session 8 — Signal 2 (Hub Closure Likelihood) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status
