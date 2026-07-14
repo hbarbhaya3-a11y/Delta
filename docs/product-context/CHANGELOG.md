@@ -5,6 +5,23 @@
 
 ---
 
+## Session 7 — Signal 1 (Network Risk Radar) ATL Evening-Bank Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 7,690 modules, 0 errors, built in 11.60s
+
+### Changed
+- **Signal 1 — Network Risk Radar re-scenarioed to the ATL evening bank (T-16h→T-4h)** across the shared UC1 dataset (`src/data/networkRiskSignals.js`), aligned to the 7-screen deep-dive design. Score 87/100, confidence 91%, 126 flights / 34 pairings / 4 hubs (ATL/JFK/DTW/MSP), reserve coverage 0.82x, Level 0 → Level 1 watch, propagation 42%.
+  - Catalog def `SIGNAL_NETWORK_RISK_RADAR` and live card `NRS_LIVE_SIGNALS[0]` given concrete values, tightened copy, and a T-24h→Now trend.
+  - Screen 1: updated `NRS_DISRUPTION` / `NRS_IMPACT` / `NRS_SIGNAL` / `NRS_NETWORK` (hubs ATL/JFK/DTW/MSP); precedents now carry `pattern` + `lesson`; hypothesis retargeted.
+  - Recommendations rebuilt as the deep-dive's 3 ranked options — Critical Bank Stabilization (recommended), Selective Schedule Thinning, Alternate Hub / Overnight Reset — with new KPI/plan data; `NRS_RANKING`, `NRS_FRONTIER`, `NRS_APPROVAL`, `NRS_BASELINE`, `NRS_VARIANTS`, `NRS_SCENARIO`, `NRS_SCOPE`, `NRS_OUTCOMES`, `NRS_INSIGHTS`, `NRS_LEARN`, `NRS_SAVE` re-aligned to the scenario.
+
+### Added
+- **Screen-1 rich blocks now populated for Signal 1** (already supported by `StoreServiceRiskPanel`): `NRS_METRICS` (signal metrics), `NRS_HUB_IMPACT` (multi-hub cascading table), `NRS_CASCADE` (L0/L1/L2 logic), `NRS_ROOT_CAUSE` (domain contribution breakdown).
+
+### Watch List
+- UC1-level metadata in `usecases.js` (`duration`, `variants`) stays general across all 9 signals — not narrowed to the ATL evening-bank window.
+
 ## Session 6 — Airline Network Risk Signals + Signal 5 Deep Dive + Delta Rebrand — 2026-07-14
 
 ### Build Status
