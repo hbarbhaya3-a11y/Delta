@@ -5,6 +5,23 @@
 
 ---
 
+## Session 15 — Holistic Strategy-Detail Modal for Signals 1, 2, 5, 6, 9 — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 18.67s
+
+### Added
+- **Strategy-detail modal (`StrategyModal`) enriched with two holistic, per-recommendation sections** so "view strategy details" reads like a full recovery plan, not just prose:
+  - **Assignments — who / what moves where**: new `AssignmentTable` component renders a `Resource → From→To → Action` table from a new optional `reco.assignments` field. Shows concrete crew/reserve moves, deadhead repositioning, tail/aircraft swaps, flights held/thinned/cancelled, and passenger reaccommodation — each tagged by kind (Crew/Reserve/Tail/Flight/Gate/Passenger).
+  - **KPIs — before vs after**: new `BeforeAfterKpis` component renders paired baseline/after bars per KPI, parsed from each recommendation's existing `kpi` rows (handles mixed $/%/count units; rows without a numeric baseline degrade to a value chip). Direction-colored teal (improved) vs the option tone.
+- Populated `assignments` for all 3 recommendations in each of the 5 signals: Signal 1 (`NRS_RECOMMENDATIONS`), Signal 2 (`SHC`), Signal 5 (`SCB`), Signal 6 (`SCP`), Signal 9 (`SPG`).
+
+### Changed
+- Modal section order is now: Objective → Phased actions → What changes → **Assignments** → Network flows before/after (Signal 1) → **KPIs before/after** → Trade-off frontier → Guardrails → Expected impact. All new sections are gated on data presence, so other use cases are unaffected.
+
+### Watch List
+- `assignments` is currently populated for Signals 1, 2, 5, 6, 9. Signals 3, 4, 7, 8 still show the KPI before/after bars (from existing `kpi` data) but no assignment table until `assignments` is added to their recommendations.
+
 ## Session 14 — Signal 4 (Reserve Burn Rate Acceleration) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status

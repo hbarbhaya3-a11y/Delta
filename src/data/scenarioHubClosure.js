@@ -198,6 +198,13 @@ export const SHC_RECOMMENDATIONS = [
     trigger: 'Closure likelihood > 70% and reserve buffer near threshold; act before the storm.',
     leversUsed: 'Pre-cancel 5 low-value flights · pre-position 12 + activate 25 reserves · protect banks · delay ≤45 min',
     impacted: '184 flights · 52 pairings · ATL banks · 26,300 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '5 low-value flights', to: 'pre-cancelled', action: 'Cancel ahead of the storm to protect banks' },
+      { kind: 'Reserve', kindColor: 'red', resource: '12 crew', from: 'DTW / MSP / off-peak bases', to: 'ATL', action: 'Pre-position before the closure window' },
+      { kind: 'Reserve', kindColor: 'red', resource: '25 ATL reserves', to: 'protected evening/overnight banks', action: 'Activate legal + qualified reserves' },
+      { kind: 'Tail', kindColor: 'orange', resource: 'Selected rotations', to: 'resequenced', action: 'Maintenance-feasible tail resequencing' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '2,000 at-risk pax', to: 'pre-storm itineraries', action: 'Early reaccommodation, premium first' },
+    ],
     confidence: '90% · best stability/CX/cost balance',
     whyNot: 'Small visible pre-cancellations vs zero-cancel delay strategy.',
     recommends: [
@@ -240,6 +247,12 @@ export const SHC_RECOMMENDATIONS = [
     trigger: 'Cancellation avoidance prioritized; storm forecast may ease.',
     leversUsed: 'No pre-cancels · heavy delay · full reserve activation · protect all banks',
     impacted: '184 flights · 52 pairings · 26,300 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: 'All banks', to: 'held ≤90 min', action: 'Heavy controlled delay, no pre-cancels' },
+      { kind: 'Reserve', kindColor: 'red', resource: '40+ crew', from: 'ATL + donor bases', to: 'full bank coverage', action: 'Full reserve activation to cover delayed flights' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Held-flight crews', to: 'legality-checked', action: 'Validate duty/rest after long delays' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '3,500 at-risk pax', to: 'protected connections', action: 'Reaccommodate as delays cascade' },
+    ],
     confidence: '76% · lowest visible cancellations',
     whyNot: 'Higher cost and misconnects; heavy reserve burn leaves less for later banks.',
     recommends: [
@@ -281,6 +294,12 @@ export const SHC_RECOMMENDATIONS = [
     trigger: 'ATL throughput collapses; reroute connection-heavy flows via DTW/MSP.',
     leversUsed: 'Reroute via DTW/MSP · redeploy crew · protect next-day ATL launch',
     impacted: 'Selected flows via DTW/MSP · 52 pairings · 26,300 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: 'Selected ATL flows', from: 'ATL', to: 'DTW / MSP', action: 'Reroute around the closing hub' },
+      { kind: 'Crew', kindColor: 'red', resource: 'ATL-based crew', to: 'overnight redeploy', action: 'Reposition to protect next-day ATL launch' },
+      { kind: 'Reserve', kindColor: 'red', resource: 'Next-day reserves', to: 'ATL morning banks', action: 'Protect the post-storm restart' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Rerouted-flow pax', to: 'DTW / MSP itineraries', action: 'Protect connections on alternate hubs' },
+    ],
     confidence: '72% · best next-day readiness',
     whyNot: 'Highest coordination complexity and donor-bottleneck risk at DTW.',
     recommends: [

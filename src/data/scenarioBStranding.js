@@ -209,6 +209,13 @@ export const SCB_RECOMMENDATIONS = [
     trigger: 'Level 2 risk is active and reserves alone cannot cover the open chain.',
     leversUsed: 'Deadhead 20 crew · 12 reserve bridge · delay 5 protected banks · tail-swap 3 · reaccom 520 pax',
     impacted: '31 legs · ATL/JFK banks · 9 tails · 4,980 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: '20 stranded crew', from: 'ORD', to: 'domicile / next origin', action: 'Deadhead reposition, critical pairings first' },
+      { kind: 'Reserve', kindColor: 'red', resource: '9 ATL + 5 JFK reserves', to: 'open remaining legs', action: 'Bridge coverage with legal, rested reserves' },
+      { kind: 'Flight', kindColor: 'grape', resource: '5 protected-bank flights', to: '≤45 min hold', action: 'Delay to align repositioned crew' },
+      { kind: 'Tail', kindColor: 'orange', resource: '3 ready tails', to: 'resequenced rotations', action: 'Maintenance-ready swap to unblock legs' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '520 at-risk pax', to: 'protected connections', action: 'Early reaccommodation, premium first' },
+    ],
     confidence: '84% · best Level 2 prevention',
     whyNot: 'Higher deadhead cost than reserve-first.',
     recommends: [
@@ -252,6 +259,12 @@ export const SCB_RECOMMENDATIONS = [
     trigger: 'Deadhead seats are tight; local reserves can stabilize same-day.',
     leversUsed: '18 ATL/JFK reserves · deadhead only 10 · protect ATL bank · delay 7 flights',
     impacted: '31 legs · ATL bank · 4,980 pax',
+    assignments: [
+      { kind: 'Reserve', kindColor: 'red', resource: '18 ATL/JFK reserves', to: 'open ATL-bank legs', action: 'Reserve-first local coverage' },
+      { kind: 'Crew', kindColor: 'red', resource: '10 stranded crew', from: 'ORD', to: 'next origin', action: 'Minimal deadhead reposition' },
+      { kind: 'Flight', kindColor: 'grape', resource: '7 flights', to: 'held / delayed', action: 'Delay to fit reserve coverage windows' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'ATL-bank pax', to: 'protected connections', action: 'Reaccommodate where holds slip' },
+    ],
     confidence: '78% · faster same-day action',
     whyNot: 'Higher reserve depletion leaves less cover for later banks.',
     recommends: [
@@ -295,6 +308,12 @@ export const SCB_RECOMMENDATIONS = [
     trigger: 'ORD stays closed beyond forecast and crew movement becomes infeasible.',
     leversUsed: 'Cancel/thin 6 low-criticality legs · reassign to ATL/JFK critical bank · reaccom 740 pax',
     impacted: '6 cancelled legs · ATL/JFK critical banks · 4,980 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '6 low-criticality legs', to: 'cancelled / thinned', action: 'Cut demand to protect core banks' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Released + stranded crew', from: 'cancelled legs / ORD', to: 'ATL / JFK critical banks', action: 'Reassign to protect connection-heavy departures' },
+      { kind: 'Reserve', kindColor: 'red', resource: 'Preserved reserves', to: 'critical banks', action: 'Hold reserve pool by cutting demand first' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '740 at-risk pax', to: 'alternate itineraries', action: 'Reaccommodate cancelled-leg passengers' },
+    ],
     confidence: '81% · lowest crew complexity',
     whyNot: 'More visible cancellations and higher passenger reaccommodation.',
     recommends: [

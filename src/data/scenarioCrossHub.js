@@ -207,6 +207,14 @@ export const SCP_RECOMMENDATIONS = [
     trigger: 'Level 1 is active and donor pulls are creating non-source open trips.',
     leversUsed: 'Freeze harmful ATL/JFK swaps · thin 7 legs · protect JFK/BOS banks · deadhead 14 · resequence 6 tails',
     impacted: '64 same-day flights · 4 hubs · 11 tail/crew splits · 3,420 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: 'Harmful ATL/JFK pulls', from: 'donor flights', to: 'frozen', action: 'Block swaps that open non-source trips' },
+      { kind: 'Reserve', kindColor: 'red', resource: '8 crew', from: 'ATL', to: 'JFK / BOS gaps', action: 'Rebalance while holding donor guardrail 0.95x' },
+      { kind: 'Crew', kindColor: 'red', resource: '14 crew', to: 'deadhead reposition', action: 'Restore next-origin alignment' },
+      { kind: 'Tail', kindColor: 'orange', resource: '6 tails', to: 'resequenced', action: 'Unblock JFK / BOS stations, maintenance-ready only' },
+      { kind: 'Flight', kindColor: 'grape', resource: '7 low-criticality legs', to: 'thinned', action: 'Protect ATL / JFK / BOS high-dependency banks' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '1,100 connection-critical pax', to: 'protected itineraries', action: 'Reaccommodate before next-day cutoff' },
+    ],
     confidence: '87% · best Level 2 prevention',
     whyNot: 'Moderate planned cancellations vs the controlled-support option.',
     recommends: [
@@ -251,6 +259,12 @@ export const SCP_RECOMMENDATIONS = [
     trigger: 'Reserve relief is available from DTW/MSP and visible cancellations must stay low.',
     leversUsed: 'Limited DTW/MSP reserve support · rebalance 12 crews · protect ATL/JFK · defer BOS restart',
     impacted: '64 same-day flights · ATL/JFK banks · 3,420 pax',
+    assignments: [
+      { kind: 'Reserve', kindColor: 'red', resource: '12 crew', from: 'DTW / MSP relief', to: 'ATL / JFK gaps', action: 'Rebalance with limited cross-hub relief' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Donor crews', to: 'guardrail-held', action: 'Hold donor coverage; safe swaps only' },
+      { kind: 'Flight', kindColor: 'grape', resource: 'ATL / JFK banks', to: 'protected + delayed', action: 'Controlled delay, defer BOS restart call' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Backlog pax', to: 'as-capacity itineraries', action: 'Reaccommodate where relief allows' },
+    ],
     confidence: '72% · lower visible cancellations',
     whyNot: 'Higher propagation uncertainty; leans on volatile donor/relief capacity.',
     recommends: [
@@ -293,6 +307,12 @@ export const SCP_RECOMMENDATIONS = [
     trigger: 'Same-day operation is already unstable; restart protection beats same-day continuity.',
     leversUsed: 'Accept same-day thinning · overnight crew/aircraft redeploy · rebuild BOS/JFK first bank',
     impacted: '64 same-day flights · BOS/JFK first banks · 3,420 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: 'Same-day low-criticality legs', to: 'thinned', action: 'Free crew + aircraft for overnight redeploy' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Freed crews', to: 'overnight reposition', action: 'Rebuild BOS / JFK first bank; legality reset' },
+      { kind: 'Tail', kindColor: 'orange', resource: 'Freed tails', to: 'BOS / JFK first banks', action: 'Overnight aircraft redeployment' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Same-day backlog pax', to: 'next-day protected banks', action: 'Reaccommodate; premium protection on' },
+    ],
     confidence: '79% · best restart readiness',
     whyNot: 'Highest short-term CX disruption from same-day thinning.',
     recommends: [

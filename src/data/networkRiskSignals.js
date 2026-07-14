@@ -394,6 +394,13 @@ export const NRS_RECOMMENDATIONS = [
     trigger: 'ATL evening bank at risk; reserve coverage 0.82x; Level 1 escalation likely without action.',
     leversUsed: 'Reserve activation + pre-positioning · selective delay · tail swap · early reaccom',
     impacted: '18 reserves · 8 pre-positioned crew · 4 delayed flights · 3 tail swaps · 620 pax',
+    assignments: [
+      { kind: 'Reserve', kindColor: 'red', resource: '18 ATL reserves', to: 'ATL evening-bank open trips', action: 'Activate legal + qualified reserves before report time' },
+      { kind: 'Crew', kindColor: 'red', resource: '8 crew', from: 'DTW / MSP / JFK', to: 'ATL', action: 'Deadhead pre-position ahead of the bank' },
+      { kind: 'Tail', kindColor: 'orange', resource: '3 ready tails', from: 'spare / early rotations', to: 'protected ATL bank', action: 'Maintenance-ready tail swap' },
+      { kind: 'Flight', kindColor: 'grape', resource: 'DL1423 + 3 connection-critical', to: '≤35 min hold', action: 'Controlled delay to align crew + tail' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '620 high-risk pax', to: 'earliest protected itinerary', action: 'Early reaccommodation, premium first' },
+    ],
     confidence: '88% execution confidence · best network stability',
     whyNot: 'Uses more reserve hours than thinning; moderate reserve cost.',
     recommends: [
@@ -440,6 +447,12 @@ export const NRS_RECOMMENDATIONS = [
     trigger: 'Reserve coverage deteriorating further; containment prioritized over customer-visible continuity.',
     leversUsed: 'Flight priority ranking · selective pre-cancellation · crew reassignment · proactive reaccom',
     impacted: '5 low-connectivity flights pre-cancelled · 20 higher-impact flights protected',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '5 low-connectivity flights', to: 'pre-cancelled', action: 'Release their crews and tails for higher-impact legs' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Released crews', from: '5 cancelled legs', to: '20 higher-impact flights', action: 'Reassign to protect connection-heavy departures' },
+      { kind: 'Reserve', kindColor: 'red', resource: 'Held reserves', to: 'ATL evening bank', action: 'Preserve reserve pool by cutting demand first' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Cancelled-flight pax', to: 'alternate itineraries', action: 'Proactive reaccommodation before departure' },
+    ],
     confidence: '74% execution confidence · lowest propagation risk',
     whyNot: 'Higher visible cancellations; use only when reserve capacity deteriorates further.',
     recommends: [
@@ -485,6 +498,12 @@ export const NRS_RECOMMENDATIONS = [
     trigger: 'Level 1 appears; next-day ATL restart readiness at risk.',
     leversUsed: 'Alternate hub routing · overnight crew redeploy · 24–72h restart plan',
     impacted: 'Selected flows via DTW/MSP · 12 crew redeployed overnight · next-day ATL launch',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: 'Connection-heavy flows', from: 'ATL at-risk bank', to: 'DTW / MSP', action: 'Reroute around the at-risk bank' },
+      { kind: 'Crew', kindColor: 'red', resource: '12 crew', from: 'ATL', to: 'overnight redeploy', action: 'Reposition for next-day ATL first bank' },
+      { kind: 'Reserve', kindColor: 'red', resource: 'Next-day reserves', to: 'ATL morning launch', action: 'Protect the 24–72h restart' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Rerouted-flow pax', to: 'DTW / MSP connections', action: 'Protect connections on alternate routing' },
+    ],
     confidence: '69% execution confidence · best next-day readiness',
     whyNot: 'Highest execution complexity and coordination overhead.',
     recommends: [

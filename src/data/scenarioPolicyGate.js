@@ -211,6 +211,13 @@ export const SPG_RECOMMENDATIONS = [
     trigger: 'A compliant path exists that clears all hard gates with no exception.',
     leversUsed: 'Remove 23 infeasible options · 6 legal reserves · delay 3 flights ≤35 min · thin 2 turns · reaccom 520 pax',
     impacted: '11 exposed flights · ATL/JFK/BOS banks · 2,260 pax',
+    assignments: [
+      { kind: 'Gate', kindColor: 'gray', resource: '23 infeasible options', to: 'removed', action: 'Filter out legality / qualification / maintenance / policy failures' },
+      { kind: 'Reserve', kindColor: 'red', resource: '6 legal reserves', to: 'exposed flights', action: 'Assign only rest- and qualification-compliant crew' },
+      { kind: 'Flight', kindColor: 'grape', resource: '3 flights', to: '≤35 min hold', action: 'Controlled delay within slot + legality limits' },
+      { kind: 'Flight', kindColor: 'grape', resource: '2 low-criticality turns', to: 'thinned', action: 'OCC-approved thinning to fit compliant coverage' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '520 at-risk pax', to: 'protected itineraries', action: 'Reaccommodate critical + premium first' },
+    ],
     confidence: '88% · best compliance + execution confidence',
     whyNot: 'Moderate planned disruption (2 thins) vs the high-cost continuity plan.',
     recommends: [
@@ -254,6 +261,12 @@ export const SPG_RECOMMENDATIONS = [
     trigger: 'Customer continuity outweighs cost; avoid cancellations.',
     leversUsed: 'Legal deadheads + incentive trigger · no cancellations · tail-resequence 2 ready aircraft · reaccom 380 pax',
     impacted: '12 protected flights · ATL/JFK banks · 2,260 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: 'Legal deadheads', to: 'protected flights', action: 'Reposition compliant crew instead of cancelling' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Incentive pickups', to: 'open trips', action: 'Policy-configured incentive trigger, no cancellations' },
+      { kind: 'Tail', kindColor: 'orange', resource: '2 ready aircraft', to: 'resequenced', action: 'Maintenance-passed tail resequencing' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '380 at-risk pax', to: 'protected itineraries', action: 'Reaccommodate critical + premium first' },
+    ],
     confidence: '76% · best passenger continuity',
     whyNot: 'Higher cost and coordination; leans on incentive and deadhead availability.',
     recommends: [
@@ -296,6 +309,12 @@ export const SPG_RECOMMENDATIONS = [
     trigger: 'Best network outcome needs one policy exception; not executable until approved.',
     leversUsed: 'Request 1 policy exception · hold 1 flight beyond cap · protect ATL/JFK bank',
     impacted: '13 protected flights · ATL/JFK bank · 2,260 pax',
+    assignments: [
+      { kind: 'Gate', kindColor: 'gray', resource: '1 policy exception', to: 'Tier 2 approval', action: 'Request exception with full audit evidence pack' },
+      { kind: 'Flight', kindColor: 'grape', resource: '1 flight', to: 'held beyond cap', action: 'Hold only under approved exception' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Compliant crew', to: 'ATL / JFK bank', action: 'Assign remaining legal coverage' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Exposed-bank pax', to: 'protected itineraries', action: 'Reaccommodate critical + premium first' },
+    ],
     confidence: '61% · potentially best network outcome',
     whyNot: 'Requires leadership approval + evidence pack; not executable until approved.',
     recommends: [
