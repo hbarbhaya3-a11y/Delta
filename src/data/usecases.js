@@ -1061,6 +1061,33 @@ const UC_STORE_SERVICE_RISK = {
   ],
 }
 
+// ── Signal 5 — Mid-Rotation Hub Stranding / Scenario B (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with Scenario B data (scenarioBStranding.js).
+const SCB_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_SCENARIO_B = {
+  id: 'uc-scenario-b-stranding',
+  title: 'Scenario B — Stranded Hub Recovery',
+  subtitle: 'Mid-rotation crew stranding at ORD cascading to ATL/JFK — deadhead-first crew repositioning + cascade containment',
+  color: 'red',
+  outcome: 'Crew position restored · Level 2 contained',
+  outcomeDetail: 'Open legs covered, cancellations avoided, stranded crew-hours cut, next-day restart protected',
+  duration: 'Immediate + 24–72h restart watch',
+  variants: '4 lever groups × 16 levers · deadhead / reserve / cancel strategies',
+  agentChain: ['Scenario B Stranding Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SCB_STEP(1, 'scb-1', 'Signal Deep Dive', 'SENSE', 'Scenario B Stranding Sentinel'),
+    SCB_STEP(2, 'scb-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SCB_STEP(3, 'scb-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SCB_STEP(4, 'scb-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SCB_STEP(5, 'scb-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SCB_STEP(6, 'scb-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SCB_STEP(7, 'scb-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1089,6 +1116,7 @@ const UC_INVENTORY_IMBALANCE = {
 
 export const useCases = [
   UC_STORE_SERVICE_RISK,
+  UC_SCENARIO_B,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
