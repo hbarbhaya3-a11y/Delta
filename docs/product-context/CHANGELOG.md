@@ -5,15 +5,15 @@
 
 ---
 
-## Session 6 — Airline Network Risk Signals + Signal 5 (Scenario B) Deep Dive + Delta Rebrand — 2026-07-14
+## Session 6 — Airline Network Risk Signals + Signal 5 Deep Dive + Delta Rebrand — 2026-07-14
 
 ### Build Status
 - `npm run build` — **PASSED** — 7,690 modules, 0 errors
-- End-to-end verified in-browser: Signal 5 (Scenario B) and Signal 1 (Network Risk Radar) both walk all 7 guided screens with 0 page errors.
+- End-to-end verified in-browser: Signal 5 (Mid-Rotation Hub Stranding) and Signal 1 (Network Risk Radar) both walk all 7 guided screens with 0 page errors.
 
 ### Added
 - **9 airline Network Risk signals** on the Sense/catalog page (`src/data/networkRiskSignals.js` → `NRS_LIVE_SIGNALS`, wired into `src/pages/UseCaseCatalog.jsx`): Network Risk Radar, Hub Closure Likelihood, Uncovered Trip Detected, Reserve Burn Rate, Mid-Rotation Hub Stranding, Cross-Hub Propagation, Passenger Misconnect Exposure, Tail-Crew Sync Gap, Binding Policy/Contract Constraint. Severity filter gained `CRITICAL`.
-- **Signal 5 — Mid-Rotation Hub Stranding (Scenario B)** now has its own dedicated 7-screen deep-dive use case `uc-scenario-b-stranding` (`src/data/scenarioBStranding.js`, `SCB_*`): ORD→ATL→JFK cascade. Screen 1 adds optional deep-dive blocks — signal metrics, multi-hub cascading table, cascade logic (L0/L1/L2), root-cause breakdown, historical episodes. Screens 2–7 cover objectives/KPIs, 16 levers across 4 groups, summary, 3 ranked recommendations (deadhead-heavy / reserve-first / cancel-thin), OCC approval, and test & learn. Signal 5 card upgraded HIGH → CRITICAL and routed to the new use case.
+- **Signal 5 — Mid-Rotation Hub Stranding** now has its own dedicated 7-screen deep-dive use case `uc-mid-rotation-stranding` (`src/data/scenarioBStranding.js`, `SCB_*`): ORD→ATL→JFK cascade. Screen 1 adds optional deep-dive blocks — signal metrics, multi-hub cascading table, cascade logic (L0/L1/L2), root-cause breakdown, historical episodes. Screens 2–7 cover objectives/KPIs, 16 levers across 4 groups, summary, 3 ranked recommendations (deadhead-heavy / reserve-first / cancel-thin), OCC approval, and test & learn. Signal 5 card upgraded HIGH → CRITICAL and routed to the new use case.
 
 ### Fixed
 - **Shared workflow panel data contract** (`src/components/workflow/panels/StoreServiceRiskPanel.jsx`): Screens 4–7, the strategy modal, and the dispatcher referenced a removed global `D.SSR_*`, so any UC1 run crashed past Screen 3. Rewrote the panel to resolve the data module per active use case via `useData()` and normalize to neutral keys. Also repaired mismatched `NRS_*` shapes (`NRS_LOADING_LINES` object-by-screen, `NRS_OUTCOMES`, `NRS_APPROVAL`, `NRS_SAVE`, `NRS_LEARN`, added `NRS_RANKING`/`NRS_FRONTIER` points/`NRS_ACCENT`) so UC1's flow runs end-to-end. KPI delta coloring is now driven by an explicit `neg` flag instead of keyword sniffing.

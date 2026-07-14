@@ -1,4 +1,4 @@
-// Signal 5 — Mid-Rotation Hub Stranding (Scenario B)
+// Signal 5 — Mid-Rotation Hub Stranding
 // Dedicated 7-screen deep-dive: ORD weather/ATC strands crews mid-rotation,
 // cascading ORD → ATL → JFK. Crew-position recovery + cascade containment.
 // Exports follow the shared workflow-panel contract (SCB_ prefix); all values
@@ -8,7 +8,7 @@ export const SCB_ACCENT = 'red'
 
 // ── Screen 1 — Signal Deep Dive ─────────────────────────────────────────────
 export const SCB_SIGNAL = {
-  sentinel: 'Scenario B Stranding Sentinel',
+  sentinel: 'Mid-Rotation Stranding Sentinel',
   bannerText: 'Mid-Rotation Hub Stranding — crews stranded at ORD by weather/ATC; remaining legs open, ATL/JFK exposed.',
   card: [
     { label: 'Signal class', value: 'Crew displacement / cascade containment' },
@@ -21,14 +21,14 @@ export const SCB_SIGNAL = {
     { label: 'Response window', value: 'First replacement report in 2h 40m' },
   ],
   sourceChips: ['CREW', 'NETWORK', 'AIRCRAFT', 'PASSENGER', 'EXTERNAL', 'DERIVED'],
-  detail: 'Scenario B: crew mid-rotation at ORD, next outbound cancels, remaining legs go open and crew is stuck out of domicile needing deadhead. Recovery choices can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2).',
+  detail: 'Crew mid-rotation at ORD, next outbound cancels, remaining legs go open and crew is stuck out of domicile needing deadhead. Recovery choices can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2).',
   conditions: [
     'ORD outbound cancellation opens remaining rotation legs,',
     'Stranded crews are out of domicile and need deadhead + legal reset,',
     'Reserves alone cannot absorb the open chain (0.76x ATL / 0.88x JFK),',
     'JFK next-day starts risk missing legal crew or aircraft block.',
   ],
-  conditionsNote: 'Scenario B nodes use crew position, legality, deadhead feasibility, and reserve coverage as state variables, with hub cancellation and open-leg creation as events.',
+  conditionsNote: 'Stranding-recovery nodes use crew position, legality, deadhead feasibility, and reserve coverage as state variables, with hub cancellation and open-leg creation as events.',
 }
 
 export const SCB_DISRUPTION = {
@@ -73,7 +73,7 @@ export const SCB_ROOT_CAUSE = [
 ]
 
 export const SCB_CASCADE = [
-  { level: 'Level 0 — Open-chain creation', status: 'Active', color: 'red', trigger: 'ORD outbound cancellation opens remaining Scenario B legs', action: 'Launch Scenario B recovery' },
+  { level: 'Level 0 — Open-chain creation', status: 'Active', color: 'red', trigger: 'ORD outbound cancellation opens remaining rotation legs', action: 'Launch stranded-hub recovery' },
   { level: 'Level 1 — Zero-sum recovery', status: 'Active', color: 'orange', trigger: 'Reserve shortage forces swaps / pulls from ATL/JFK pairings', action: 'Block harmful donor pulls; score donor-flight risk' },
   { level: 'Level 2 — Cross-hub contamination', status: 'Watch', color: 'yellow', trigger: 'JFK next-day starts lack legal crew or aircraft block', action: 'Activate 24–72h restart simulation' },
 ]
@@ -166,7 +166,7 @@ export const SCB_LEVER_DEFAULTS = Object.fromEntries(SCB_ALL_LEVERS.map(l => [l.
 
 // ── Screen 4 — Simulation Summary ───────────────────────────────────────────
 export const SCB_SCENARIO = {
-  name: 'Scenario B — Stranded Hub Recovery',
+  name: 'Stranded Hub Recovery',
   signal: 'Mid-Rotation Hub Stranding Detected',
   objective: 'Restore stranded crew position and protect downstream pairings without triggering Level 2 cross-hub failure.',
   method: 'Event-triggered live simulation + 24–72h restart watch; crew legality, deadhead feasibility, reserve bridge, and donor-risk scoring across Crew / Network / Aircraft / Passenger twins.',
@@ -228,11 +228,11 @@ export const SCB_RECOMMENDATIONS = [
     bestWhen: 'Preventing next-day cross-hub contamination is the priority.',
     risk: 'Deadhead cost near cap; watch seat availability until execution lock.',
     plan: {
-      title: 'Scenario B — Deadhead-heavy Containment',
+      title: 'Deadhead-heavy Containment',
       objective: 'Restore crew position and prevent Level 2 contamination using deadhead-first moves plus a reserve bridge.',
       phases: [
         { name: 'Phase 1 — Deadhead wave (0–90 min)', actions: ['Book ORD→ATL/JFK deadhead for 20 crew, critical pairing first', 'Confirm legal arrival before report time'] },
-        { name: 'Phase 2 — Reserve bridge (0–2 hr)', actions: ['Assign 9 ATL + 5 JFK legal reserves as bridge coverage', 'Rebuild 6 remaining Scenario B pairings'] },
+        { name: 'Phase 2 — Reserve bridge (0–2 hr)', actions: ['Assign 9 ATL + 5 JFK legal reserves as bridge coverage', 'Rebuild 6 remaining rotation pairings'] },
         { name: 'Phase 3 — Protect banks (1–4 hr)', actions: ['Delay 5 protected-bank flights ≤45 min', 'Tail-swap 3 ready aircraft; reaccommodate 520 pax'] },
         { name: 'Phase 4 — Restart watch (evening → next day)', actions: ['Arm 24–72h restart watch for JFK morning bank', 'Trigger overnight reset before legal cutoff'] },
       ],
@@ -272,7 +272,7 @@ export const SCB_RECOMMENDATIONS = [
     bestWhen: 'Deadhead seats disappear or ORD reopens quickly.',
     risk: 'Reserve depletion exposes later banks; Level 2 less contained.',
     plan: {
-      title: 'Scenario B — Reserve-first Stabilization',
+      title: 'Reserve-first Stabilization',
       objective: 'Stabilize same-day operations using local reserves with minimal deadhead.',
       phases: [
         { name: 'Phase 1 — Reserve assignment (0–90 min)', actions: ['Assign 18 ATL/JFK legal reserves', 'Deadhead 10 crew for gaps reserves cannot fill'] },
@@ -314,7 +314,7 @@ export const SCB_RECOMMENDATIONS = [
     bestWhen: 'ORD remains closed beyond forecast and deadhead becomes infeasible.',
     risk: 'Visible cancellations and larger passenger reaccommodation load.',
     plan: {
-      title: 'Scenario B — Cancel / Thin Core-bank Protection',
+      title: 'Cancel / Thin Core-bank Protection',
       objective: 'Protect core ATL/JFK banks by cancelling low-criticality legs and reassigning crew.',
       phases: [
         { name: 'Phase 1 — Rank legs (0–60 min)', actions: ['Rank 31 legs by criticality and connection load', 'Select 6 low-criticality cancel/thin candidates'] },
@@ -363,7 +363,7 @@ export const SCB_APPROVAL = {
   execItems: [
     { item: 'Deadhead booking', target: 'Crew travel / scheduling', action: 'Book ORD→ATL/JFK deadhead for 20 crew' },
     { item: 'Reserve assignment', target: 'Crew scheduling', action: 'Assign 12 legal reserves as bridge coverage' },
-    { item: 'Pairing update', target: 'Crew ops', action: 'Rebuild remaining Scenario B rotation legs' },
+    { item: 'Pairing update', target: 'Crew ops', action: 'Rebuild remaining rotation legs' },
     { item: 'Flight delay plan', target: 'OCC / network ops', action: 'Delay 5 protected-bank flights ≤45 min' },
     { item: 'Tail swap', target: 'Aircraft planning / maintenance', action: 'Swap 3 ready tails into protected rotations' },
     { item: 'Passenger recovery', target: 'Reaccommodation', action: 'Protect 520 pax + priority connections' },
@@ -390,7 +390,7 @@ export const SCB_INSIGHTS = [
   'Safe-swap guardrail prevented donor-hub escalation — keep it on by default.',
   'Reserve-first stays valuable as a fallback, not primary, when Level 2 risk exists.',
   'Passenger misconnects rose from gate compression — couple gate/airport congestion earlier.',
-  'Next-day restart was protected — promote the 24–72h restart watch for all Scenario B runs.',
+  'Next-day restart was protected — promote the 24–72h restart watch for all mid-rotation stranding runs.',
 ]
 
 export const SCB_LEARN = {
@@ -414,8 +414,8 @@ export const SCB_LEARN = {
 }
 
 export const SCB_SAVE = {
-  name: 'Scenario B — ORD Mid-Rotation Stranding to ATL/JFK Containment',
-  tags: ['MID-ROTATION STRANDING', 'SCENARIO B', 'DEADHEAD CONTAINMENT', 'RESERVE BRIDGE', 'LEVEL 2 WATCH', 'ORD/ATL/JFK'],
+  name: 'ORD Mid-Rotation Stranding to ATL/JFK Containment',
+  tags: ['MID-ROTATION STRANDING', 'STRANDED HUB RECOVERY', 'DEADHEAD CONTAINMENT', 'RESERVE BRIDGE', 'LEVEL 2 WATCH', 'ORD/ATL/JFK'],
   reusableFor: [
     'hub closure recovery',
     'storm / weather recovery',
@@ -433,5 +433,5 @@ export const SCB_LOADING_LINES = {
   4: ['Assembling scenario setup…', 'Running legality + deadhead feasibility checks…', 'Summary ready.'],
   5: ['Running live simulation + restart watch…', 'Comparing deadhead / reserve / cancel strategies…', 'Ranking recommendations…'],
   6: ['Assembling execution package…', 'Validating legality + donor guardrails…', 'Ready for OCC approval.'],
-  7: ['Capturing realized outcomes…', 'Comparing predicted vs actual…', 'Updating priors + Scenario B playbook…'],
+  7: ['Capturing realized outcomes…', 'Comparing predicted vs actual…', 'Updating priors + stranded-hub recovery playbook…'],
 }
