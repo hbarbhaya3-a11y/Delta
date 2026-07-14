@@ -307,17 +307,17 @@ export const NRS_NETWORK = {
   },
 }
 
-export const NRS_LOADING_LINES = [
-  'Ingesting crew legality data from scheduling system…',
-  'Fetching aircraft readiness and maintenance constraints…',
-  'Pulling weather forecast and hub closure probabilities…',
-  'Merging passenger connection data for misconnect exposure…',
-  'Running Network Risk Radar aggregation model…',
-  'TwinX crew + aircraft + network Twin models synchronized.',
-  'Monte Carlo scenario generation (1,000 iterations) complete.',
-  'Optimization against crew protection + cancellation-avoidance objectives…',
-  'Simulation results ready for review.',
-]
+export const NRS_ACCENT = 'red'
+
+export const NRS_LOADING_LINES = {
+  1: ['Ingesting crew · aircraft · weather · passenger feeds…', 'Scoring network risk across flights / pairings / hubs…', 'Matching disruption precedents…', 'Signal analysis ready.'],
+  2: ['Loading objective framework…', 'Weighting crew protection / cancellation / CX…', 'Objectives ready.'],
+  3: ['Loading recovery levers…', 'Applying recommended configuration…', 'Levers ready.'],
+  4: ['Assembling scenario setup…', 'Running crew legality + readiness checks…', 'Summary ready.'],
+  5: ['Running Monte Carlo simulation (1,000 iterations)…', 'Comparing recovery scenarios vs baseline…', 'Ranking recommendations…'],
+  6: ['Assembling execution package…', 'Validating legality + guardrails…', 'Ready for OCC approval.'],
+  7: ['Capturing realized outcomes…', 'Comparing predicted vs actual…', 'Updating priors + scenario library…'],
+}
 
 export const NRS_VARIANTS = [
   { scenario: 'Baseline / Do Nothing', desc: 'Current schedule continues — likely cascade into Level 1-2 disruption' },
@@ -414,7 +414,7 @@ export const NRS_RECOMMENDATIONS = [
       { k: 'Open trips risk', b: '19', a: '8', d: '-11 trips' },
       { k: 'Reserve exhaustion ETA', b: '8 hrs', a: '20+ hrs', d: '+12 hrs' },
       { k: 'Cancellations', b: '0–6', a: '6–8', d: 'Controlled pre-cancels' },
-      { k: 'Revenue impact', b: '$0', a: '−$240–$320K', d: 'Known cost' },
+      { k: 'Revenue impact', b: '$0', a: '−$240–$320K', d: 'Known cost', neg: true },
       { k: 'Hub cascade risk', b: 'High', a: 'Low', d: 'Contained' },
     ],
     why: 'Selective cancellation of low-value flights releases crew for high-priority protection.',
@@ -488,102 +488,91 @@ export const NRS_RECOMMENDATIONS = [
   },
 ]
 
-export const NRS_OUTCOMES = [
-  { label: 'Baseline (do nothing)', value: 'Cascade', detail: 'Level 0 → Level 1 → Level 2; ~18 cancellations; crew legality breaches; 2,000+ misconnects' },
-  { label: 'Recommendation 1 (pre-position)', value: 'Mitigated', detail: '12 open trips prevented; 480 misconnects avoided; no cancellations required' },
-  { label: 'Recommendation 2 (pre-cancel)', value: 'Controlled', detail: '8 pre-cancelled flights; 6–8 flights protected by crew redeploy; revenue cost $240K' },
-  { label: 'Recommendation 3 (combined)', value: 'Protected', detail: 'All 47 flights protected except 4; cascade risk contained; no uncontrolled cancellations' },
+export const NRS_RANKING = [
+  { rank: 1, reco: 'Combined Network Protection', service: 'Highest', cost: 'Medium-high', speed: 'High', feasibility: 'High', select: 'Selected' },
+  { rank: 2, reco: 'Pre-Position Reserves Only', service: 'Medium-high', cost: 'Low', speed: 'Highest', feasibility: 'High', select: 'Alternative' },
+  { rank: 3, reco: 'Selective Pre-Cancellation', service: 'High', cost: 'Medium', speed: 'Medium', feasibility: 'Medium-high', select: 'Alternative' },
 ]
-
-export const NRS_INSIGHTS = [
-  { label: 'Crew legality as a guardrail', value: 'Duty/rest violations prevent 3+ recovery actions; all recommendations comply with crew regulations.' },
-  { label: 'Reserve pre-positioning ROI', value: 'First-mover advantage: 6 additional flights protected per hour of crew pre-positioning lead time.' },
-  { label: 'Hub closure forecast confidence', value: 'At 50% probability, intervention begins; at 75%+, aggressive pre-cancellation justified.' },
-  { label: 'Passenger misconnect cascade', value: 'Single 2-hour delay → 200+ misconnects; connection-heavy routes require priority protection.' },
-  { label: 'Cross-hub rebalancing urgency', value: 'Reserve redistribution after hub closure becomes zero-sum; pre-positioning before closure is 3× more effective.' },
-]
-
-export const NRS_WORKFLOW_ACTIONS = {
-  preposition: {
-    description: 'Pre-positioning workflow',
-    systems: ['Crew Scheduling', 'Resource Planning', 'Flight Operations'],
-    actions: [
-      { system: 'Crew Scheduling', action: 'Issue dispatch orders for 34 reserves → ATL (18), ORD (16)' },
-      { system: 'Crew Scheduling', action: 'Assign pre-positioned crew to priority pairings' },
-      { system: 'Resource Planning', action: 'Track reserve pool balance across all hubs' },
-      { system: 'Flight Operations', action: 'Monitor crew arrival and readiness status' },
-      { system: 'Flight Operations', action: 'Execute flight assignments as crew becomes available' },
-    ],
-  },
-  cancel: {
-    description: 'Pre-cancellation workflow',
-    systems: ['Revenue Management', 'Passenger Services', 'Crew Scheduling'],
-    actions: [
-      { system: 'Revenue Management', action: 'Identify 6–8 lowest-priority flights for pre-cancellation' },
-      { system: 'Passenger Services', action: 'Initiate auto-rebooking for affected passengers' },
-      { system: 'Passenger Services', action: 'Issue customer care outreach for major revenue impact' },
-      { system: 'Crew Scheduling', action: 'Release crew from cancelled flights' },
-      { system: 'Crew Scheduling', action: 'Assign released crew to high-priority flights' },
-    ],
-  },
-  combined: {
-    description: 'Combined network protection workflow',
-    systems: ['Crew Scheduling', 'Resource Planning', 'Flight Operations', 'Revenue Management', 'Passenger Services'],
-    actions: [
-      { system: 'Crew Scheduling', action: 'Phase 1: Dispatch 34 reserves to ATL/ORD (parallel to other actions)' },
-      { system: 'Revenue Management', action: 'Phase 1: Identify pre-cancel candidates (parallel)' },
-      { system: 'Crew Scheduling', action: 'Phase 2: Assign pre-positioned crew to priority flights' },
-      { system: 'Passenger Services', action: 'Phase 2: Initiate rebooking for pre-cancelled flights' },
-      { system: 'Crew Scheduling', action: 'Phase 3: Rebalance reserves across hubs' },
-      { system: 'Flight Operations', action: 'Phase 4: Reroute connection-heavy flights via alternate hubs if needed' },
-      { system: 'Flight Operations', action: 'Monitor: Track all flights, crew legality, reserve balance in real-time' },
-    ],
-  },
-}
 
 export const NRS_FRONTIER = {
-  title: 'Scenario Trade-offs — Flights Protected vs Cancellations vs Recovery Time',
-  axes: { x: 'Controlled Cancellations', y: 'Flights Protected', size: 'Recovery Time (hrs)' },
-  scenarios: [
-    { id: 'baseline', label: 'Do Nothing (Baseline)', x: 18, y: 28, size: 48, color: 'red', tone: 'red' },
-    { id: 'preposition', label: 'Pre-Position Only', x: 0, y: 35, size: 6, color: 'orange', tone: 'orange' },
-    { id: 'cancel', label: 'Pre-Cancel Only', x: 8, y: 39, size: 4, color: 'blue', tone: 'blue' },
-    { id: 'combined', label: 'Combined (Recommended)', x: 6, y: 43, size: 4, color: 'green', tone: 'green' },
+  xLabel: 'Controlled cancellations', yLabel: 'Flights protected', zLabel: 'Recovery time (hr)',
+  points: [
+    { x: 18, y: 28, z: 48, label: 'Do nothing', tone: 'gray' },
+    { x: 0, y: 35, z: 6, label: 'Pre-position only', tone: 'orange' },
+    { x: 8, y: 39, z: 4, label: 'Pre-cancel only', tone: 'blue' },
+    { x: 6, y: 43, z: 4, label: 'Combined', tone: 'green', recommended: true },
   ],
 }
 
 export const NRS_APPROVAL = {
-  approver: 'Director of Flight Operations',
-  defaultOverride: 'Approved — Scenario 3 (Combined). Crew legality compliance enforced; no override of policy constraints.',
-  approvalItems: [
-    'Scenario 3: combined network protection (pre-position + pre-cancel + rebalance)',
-    '47 flights prioritized · 12 pairings · 3 hubs',
-    'Crew legality constraints: maintained across all recovery actions',
-    'Passenger misconnect risk: 2,400 → 200 (−91%)',
-    'Controlled pre-cancellations: 6–8 flights',
+  selected: 'Combined Network Protection',
+  action: 'Pre-position reserves + selective pre-cancellation + cross-hub rebalancing + alternate routing',
+  summary: [
+    { field: 'Decision owner', value: 'OCC duty manager / Director of Flight Operations' },
+    { field: 'Approval type', value: 'Human approval required' },
+    { field: 'Auto-execution', value: 'Disabled' },
+    { field: 'Audit status', value: 'Decision log will be created' },
   ],
-  doNothing: { engagement: 0.0, flights_protected: 28, cancellations: '18+ (uncontrolled)', aum: 0 },
-  scenarioRationale: {
-    preposition: 'Conservative; pre-position only. Effective if hub closure probability remains <60%.',
-    cancel: 'Aggressive; pre-cancel without reserving crew. Risk: forced cancellations escalate cascade.',
-    combined: 'Recommended. Balances crew legality, passenger experience, and operational stability using all levers in sequence.',
-  },
+  execItems: [
+    { item: 'Reserve pre-position list', target: 'Crew scheduling', action: 'Dispatch 34 reserves to ATL/ORD ahead of weather' },
+    { item: 'Pre-cancel list', target: 'OCC / revenue management', action: 'Cancel 6–8 lowest-priority flights; release crew' },
+    { item: 'Crew reassignment', target: 'Crew ops', action: 'Assign released + pre-positioned crew to priority flights' },
+    { item: 'Cross-hub rebalance', target: 'Resource planning', action: 'Redistribute reserves across ATL / ORD / DEN' },
+    { item: 'Passenger recovery', target: 'Reaccommodation', action: 'Auto-rebook affected passengers; protect connections' },
+    { item: 'Expected KPI delta', target: 'Decision log', action: 'Store predicted KPI improvement before execution' },
+  ],
+  rationale: 'Combined protection uses reserves first, pre-cancels second, and rebalancing third — the lowest-disruption path. It maintains crew legality, contains cascade risk, and cuts misconnects 2,400 → 200.',
+  constraints: ['Crew legality / rest', 'Crew qualification', 'Hub closure threshold', 'Reserve pool capacity', 'Passenger priority rules', 'Human approval'],
 }
 
 export const NRS_SAVE = {
-  title: 'Network Vulnerability Scenario',
-  description: 'Crew scheduling + hub closure forecast + reserve protection + selective pre-cancellation response',
-  tags: ['network-risk', 'crew-protection', 'hub-closure', 'weather-response', 'cascade-prevention'],
+  name: 'Network Vulnerability Scenario — Combined Protection',
+  tags: ['NETWORK RISK', 'CREW PROTECTION', 'HUB CLOSURE', 'WEATHER RESPONSE', 'CASCADE PREVENTION'],
+  reusableFor: [
+    'weather-driven hub closure',
+    'reserve burn surge',
+    'crew legality + misposition',
+    'cross-hub cascade risk',
+    'forecast-led pre-disruption planning',
+  ],
 }
 
+export const NRS_OUTCOMES = [
+  { metric: 'Flights protected', pred: '43/47', actual: '41/47', learn: 'Two late callouts reduced cover' },
+  { metric: 'Open trips prevented', pred: '15', actual: '13', learn: 'Within acceptable variance' },
+  { metric: 'Crew legality violations', pred: '0', actual: '0', learn: 'Guardrail held' },
+  { metric: 'Misconnects at risk', pred: '200', actual: '260', learn: 'Gate congestion added exposure' },
+  { metric: 'Controlled cancellations', pred: '6', actual: '7', learn: 'Closure lasted longer than forecast' },
+  { metric: 'Reserve exhaustion ETA', pred: '24+ hr', actual: '22 hr', learn: 'Update burn-rate prior' },
+  { metric: 'Cost-to-recover', pred: '$2.05M', actual: '$2.18M', learn: 'Above forecast on cancellations' },
+]
+
+export const NRS_INSIGHTS = [
+  'Crew legality acts as a hard guardrail — it eliminated 3+ otherwise-attractive recovery actions.',
+  'Reserve pre-positioning has first-mover ROI: ~6 more flights protected per hour of lead time.',
+  'Intervention should begin at 50% hub-closure probability; aggressive pre-cancel above 75%.',
+  'A single 2-hour delay drives 200+ misconnects — connection-heavy routes need priority protection.',
+  'Reserve rebalancing after closure is zero-sum; pre-positioning before closure is ~3× more effective.',
+]
+
 export const NRS_LEARN = {
-  episodeTitle: 'Network Disruption Response — Episode #3',
-  engagement: { scenarioCreated: 1, approvalsRequired: 3, executionsSuccessful: 1 },
-  action: { crewDispatched: 34, flightsProtected: 43, preCapCancellations: 6 },
-  aum: { misconnectsAvoided: 2200, passengerExperienceImprovement: 91, cascadePrevented: true },
-  pnl: { revenueProtected: 940000, costOfAction: 240000, netBenefit: 700000 },
-  modelUpdate: { priorLabel: 'Hub closure cascade prior', priorBefore: 0.85, priorAfter: 0.35, twinsEnriched: 47, episodeNumber: 3, episodeContext: 'Network Disruption Response · 24-hr window · 3 decision hubs' },
-  outputTracking: { totalSimulations: 1000, decisionsApproved: 1, executionsCompleted: 1, feedbackReceived: 89 },
+  accuracy: [
+    { label: 'Overall prediction accuracy', value: '90%' },
+    { label: 'Flights protected', value: '±2 flights' },
+    { label: 'Reserve exhaustion ETA', value: '±2 hr' },
+    { label: 'Cost-to-recover', value: '±$130K' },
+  ],
+  recalibration: [
+    { label: 'Hub-closure cascade prior', before: '0.85', after: '0.35', delta: '−0.50', note: 'Combined protection contained the cascade' },
+    { label: 'Reserve burn-rate model', before: '9/hr', after: '11/hr', delta: '+2/hr', note: 'Burn ran hotter than simulated' },
+    { label: 'Misconnect model', before: 'w=0.55', after: 'w=0.64', delta: '+gate congestion', note: 'Add gate/airport congestion sensitivity' },
+  ],
+  patterns: [
+    'Weather-exposed hubs precede reserve burn surges by roughly one bank.',
+    'Pre-positioning before closure outperforms post-closure rebalancing on every KPI.',
+    'Gate congestion at recovery hubs adds misconnects not captured by delay alone.',
+  ],
+  twin: { nodesEnriched: 47, lanesEnriched: 12, before: '76%', after: '90%', summary: '47 flight twins · 12 pairing twins enriched — crew + network twins updated with realized recovery outcomes' },
 }
 
 // ── Primary Signal for Screen 1: Network Risk Radar ────────────────────────────
@@ -828,25 +817,25 @@ export const NRS_LIVE_SIGNALS = [
   },
   {
     ucId: 'nrs-mid-rotation-stranding',
-    linkedUseCaseId: UC1,
-    severity: 'HIGH', severityColor: 'orange', stage: 'SENSE',
+    linkedUseCaseId: 'uc-scenario-b-stranding',
+    severity: 'CRITICAL', severityColor: 'red', stage: 'SENSE',
     title: 'Mid-Rotation Hub Stranding Detected (Scenario B)',
-    description: 'Detects crews stranded mid-rotation due to hub cancellation.',
-    detail: 'Starting point of Scenario B (Level 0). Remaining legs become open, and repositioning needs create downstream risk. Likely root causes: hub cancellation, weather/ATC, aircraft delay.',
-    sourceChip: 'CREW ROTATION · HUB OPS',
-    agent: 'Rotation Sentinel', date: '7/13/2026',
-    metricValue: '7', metricUnit: 'stranded crews',
-    metricStripLabel: 'Stranded crews', metricSub: 'remaining legs affected',
-    tags: ['STRANDED CREWS', 'STRANDED CREW-HOURS', 'REMAINING LEGS', 'DOMICILE DISTANCE', 'SCENARIO B'],
-    precedents: 4, precedentNote: null, confidence: 85,
-    window: 'Immediate',
+    description: 'Crews stranded mid-rotation at ORD by weather/ATC; remaining legs open, ATL/JFK exposed.',
+    detail: 'Scenario B (Level 0 onset, upgraded to Critical as Level 1 activates): ORD outbound cancels, crew is stuck out of domicile needing deadhead, and remaining legs go open. Recovery can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2). Likely root causes: hub cancellation, weather/ATC, aircraft delay.',
+    sourceChip: 'CREW · NETWORK · AIRCRAFT · PASSENGER',
+    agent: 'Scenario B Stranding Sentinel', date: '7/13/2026',
+    metricValue: '14', metricUnit: 'stranded crews',
+    metricStripLabel: 'Stranded crews', metricSub: '62 crew · 31 legs open',
+    tags: ['STRANDED CREWS', '486 CREW-HOURS', '31 OPEN LEGS', 'DEADHEAD DEPENDENCY', 'L0/L1/L2 CASCADE'],
+    precedents: 3, precedentNote: null, confidence: 84,
+    window: 'Immediate · first replacement report in 2h 40m',
     trendLabel: 'MID-ROTATION STRANDING TREND — Stranded Crews',
     trendData: [
-      { x: 'T-6', v: 0 }, { x: 'T-5', v: 1 }, { x: 'T-4', v: 2 },
-      { x: 'T-3', v: 3 }, { x: 'T-2', v: 5 }, { x: 'T-1', v: 6 }, { x: 'Now', v: 7 },
+      { x: 'T-6', v: 0 }, { x: 'T-5', v: 2 }, { x: 'T-4', v: 5 },
+      { x: 'T-3', v: 8 }, { x: 'T-2', v: 11 }, { x: 'T-1', v: 13 }, { x: 'Now', v: 14 },
     ],
     scenario: 'Scenario B — Stranded Hub Recovery',
-    scenarioSub: 'Hub cancellation → crews stranded → deadhead reposition / reserve assign / reassign',
+    scenarioSub: 'ORD stranding → ATL displacement → JFK next-day → deadhead-first + reserve bridge + containment',
   },
   {
     ucId: 'nrs-cross-hub-propagation',
