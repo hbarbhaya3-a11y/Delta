@@ -167,7 +167,7 @@ export const SCB_LEVER_DEFAULTS = Object.fromEntries(SCB_ALL_LEVERS.map(l => [l.
 // ── Screen 4 — Simulation Summary ───────────────────────────────────────────
 export const SCB_SCENARIO = {
   name: 'Scenario B — Stranded Hub Recovery',
-  signal: 'Mid-Rotation Hub Stranding Detected (Scenario B)',
+  signal: 'Mid-Rotation Hub Stranding Detected',
   objective: 'Restore stranded crew position and protect downstream pairings without triggering Level 2 cross-hub failure.',
   method: 'Event-triggered live simulation + 24–72h restart watch; crew legality, deadhead feasibility, reserve bridge, and donor-risk scoring across Crew / Network / Aircraft / Passenger twins.',
 }
