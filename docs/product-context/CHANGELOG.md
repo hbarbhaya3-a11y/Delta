@@ -5,6 +5,23 @@
 
 ---
 
+## Session 10 — Signal 9 (Binding Policy / Contract Constraint) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 9.15s
+
+### Added
+- **Signal 9 — Binding Policy / Contract Constraint Flag** now has its own dedicated 7-screen deep-dive use case `uc-policy-feasibility-gate` (`src/data/scenarioPolicyGate.js`, `SPG_*`), following the Scenario B pattern. Scenario: ATL multi-option recovery (JFK/BOS/MCO downstream) blocked by hard gates — 16 binding constraints removed 23 of 64 options before ranking, 2 need a Tier 2 exception, 11 flights still exposed, 89% confidence.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics (legality/qualification/maintenance/policy/cost failure counts), multi-hub constraint table (blocked/conditional actions per hub), cascade logic (L0 active / L1 active / L2 watch), root-cause breakdown, historical episodes.
+  - Screens 2–7: objectives/KPIs (compliance 40 / stability 25 / CX 15 / resource 10 / cost 10), 16 policy-aware levers across 4 groups (some hard gates, non-adjustable), summary + hard constraints, 3 ranked recommendations (Fully compliant / High-cost continuity / Exception-required), OCC + policy multi-role approval, and test & learn producing the "ATL Policy Feasibility Gate — Compliant Recovery First" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-policy-feasibility-gate` → `SPG`), added `UC_POLICY_GATE` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 9 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-policy-feasibility-gate`; 16 binding constraints, 23 of 64 options removed, Tier 2, 89% confidence, refreshed trend. Catalog def `SIGNAL_POLICY_CONSTRAINT` given concrete values.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 5, 6, and 9; the remaining four signals (3, 4, 7, 8) still route to UC1. Follow the same Scenario B pattern to add more.
+
 ## Session 9 — Signal 6 (Cross-Hub Propagation) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status

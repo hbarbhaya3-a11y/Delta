@@ -16,6 +16,7 @@ import * as NRS from '../../../data/networkRiskSignals'
 import * as SCB from '../../../data/scenarioBStranding'
 import * as SHC from '../../../data/scenarioHubClosure'
 import * as SCP from '../../../data/scenarioCrossHub'
+import * as SPG from '../../../data/scenarioPolicyGate'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
 
 // ── Data resolution ─────────────────────────────────────────────────────────
@@ -27,6 +28,7 @@ const MODULES = {
   'uc-mid-rotation-stranding': { prefix: 'SCB', mod: SCB },
   'uc-hub-closure': { prefix: 'SHC', mod: SHC },
   'uc-cross-hub-propagation': { prefix: 'SCP', mod: SCP },
+  'uc-policy-feasibility-gate': { prefix: 'SPG', mod: SPG },
 }
 function useData() {
   const { activeUseCase } = useUseCase()
