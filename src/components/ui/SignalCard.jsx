@@ -91,10 +91,6 @@ export default function SignalCard({ signal, isSelected, onClick }) {
             <Text size="xs" fw={600}>{fmtK(signal.affectedCohortCount ?? signal.affectedAdvisorCount ?? 0)}</Text>
             <Text size="xs" c="dimmed">participants</Text>
           </Group>
-          <Group gap={4}>
-            <IconRadar size={11} stroke={1.5} style={{ color: 'var(--mantine-color-dimmed)' }} />
-            <Text size="xs" c="dimmed">{signal.historicalPrecedentCount} precedents</Text>
-          </Group>
         </Group>
 
         {/* Row 4: confidence bar */}
