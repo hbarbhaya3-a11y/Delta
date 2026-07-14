@@ -5,6 +5,23 @@
 
 ---
 
+## Session 11 — Signal 8 (Tail-Crew Synchronization Gap) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 12.39s
+
+### Added
+- **Signal 8 — Tail-Crew Synchronization Gap** now has its own dedicated 7-screen deep-dive use case `uc-tail-crew-sync` (`src/data/scenarioTailCrew.js`, `STC_*`), following the Scenario B / Cross-Hub pattern. Scenario: multi-hub aircraft/crew readiness mismatch ATL → JFK → BOS (MCO donor) — crew ready without a released tail (DL2381 ATL–JFK) and a ready tail without positioned crew (DL1842 ATL–MCO). +68 min readiness gap, 18 affected legs, 9 aircraft/crew split pairs, 7 impacted tails, 4 feasible swaps, 3 maintenance gates, 410 misconnects, 6 next-day departures exposed, 81% confidence, L0 active / L1 watch / L2 next-day watch.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics, multi-hub tail-crew coupling table (ATL/JFK/BOS/MCO), cascade logic (L0 mismatch / L1 donor risk / L2 restart watch), root-cause breakdown (aircraft 34 / crew 25 / network 18 / gate 10 / pax 8 / ATC 5), historical episodes.
+  - Screens 2–7: objectives/KPIs (reliability 35 / resource 25 / CX 20 / cost 10 / restart 10), 15 synchronization levers across 4 groups (aircraft / crew / network / pax+cost+recovery), summary + assumptions, 3 ranked recommendations (Tail swap + crew preservation / Crew reassignment / Controlled delay + release wait), OCC multi-role approval, and test & learn producing the "ATL Tail-Crew Sync — JFK/BOS Spillover Containment" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-tail-crew-sync` → `STC`), added `UC_TAIL_CREW` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 8 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-tail-crew-sync`; primary metric switched to the +68 min readiness gap (18 legs · 9 split pairs · 7 tails), 81% confidence, ATL/JFK/BOS/MCO, T-4h + 10-min live-refresh window, refreshed trend. Catalog def `SIGNAL_TAIL_CREW_SYNC` given concrete crew-aircraft-sync values.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 5, 6, 7, and 8; the remaining three signals (3, 4, 9) still route to UC1. Follow the same pattern to add more.
+
 ## Session 10 — Signal 7 (Passenger Misconnect Exposure) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status

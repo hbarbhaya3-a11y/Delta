@@ -1169,6 +1169,33 @@ const UC_MISCONNECT = {
   ],
 }
 
+// ── Signal 8 — Tail-Crew Synchronization Gap (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with tail-crew sync data (scenarioTailCrew.js).
+const STC_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_TAIL_CREW = {
+  id: 'uc-tail-crew-sync',
+  title: 'ATL Tail-Crew Synchronization Run — JFK/BOS Spillover',
+  subtitle: 'Aircraft/crew readiness mismatch across ATL → JFK → BOS (MCO donor) — a tail-only or crew-only fix still fails; synchronize both sides with maintenance, gate, and next-day restart feasibility',
+  color: 'yellow',
+  outcome: 'Readiness gap closed · split pairs resolved',
+  outcomeDetail: 'Crew and tail readiness synchronized, legality preserved, idle-hours and misconnects cut, BOS next-day restart protected',
+  duration: 'T-4h to first departure · live refresh 10 min · 24–72h restart watch',
+  variants: '4 lever groups × 15 levers · tail-swap / crew-reassign / delay strategies',
+  agentChain: ['Sync Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    STC_STEP(1, 'stc-1', 'Signal Deep Dive', 'SENSE', 'Sync Sentinel'),
+    STC_STEP(2, 'stc-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    STC_STEP(3, 'stc-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(4, 'stc-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    STC_STEP(5, 'stc-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    STC_STEP(6, 'stc-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    STC_STEP(7, 'stc-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1201,6 +1228,7 @@ export const useCases = [
   UC_HUB_CLOSURE,
   UC_CROSS_HUB,
   UC_MISCONNECT,
+  UC_TAIL_CREW,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
