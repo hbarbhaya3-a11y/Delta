@@ -18,6 +18,7 @@ import * as SHC from '../../../data/scenarioHubClosure'
 import * as SCP from '../../../data/scenarioCrossHub'
 import * as SMX from '../../../data/scenarioMisconnect'
 import * as STC from '../../../data/scenarioTailCrew'
+import * as SPG from '../../../data/scenarioPolicyGate'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
 
 // ── Data resolution ─────────────────────────────────────────────────────────
@@ -31,6 +32,7 @@ const MODULES = {
   'uc-cross-hub-propagation': { prefix: 'SCP', mod: SCP },
   'uc-misconnect-exposure': { prefix: 'SMX', mod: SMX },
   'uc-tail-crew-sync': { prefix: 'STC', mod: STC },
+  'uc-policy-feasibility-gate': { prefix: 'SPG', mod: SPG },
 }
 function useData() {
   const { activeUseCase } = useUseCase()
