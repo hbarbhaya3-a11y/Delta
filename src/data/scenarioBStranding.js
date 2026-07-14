@@ -1,8 +1,10 @@
 // Signal 5 — Mid-Rotation Hub Stranding
-// Dedicated 7-screen deep-dive: ORD weather/ATC strands crews mid-rotation,
-// cascading ORD → ATL → JFK. Crew-position recovery + cascade containment.
-// Exports follow the shared workflow-panel contract (SCB_ prefix); all values
-// are illustrative UI mock data, not actual Delta operational data.
+// Dedicated 7-screen deep-dive: an ORD weather/ATC ground stop strands crews
+// mid-rotation, cancelling the outbound leg and opening the remaining rotation
+// chain into the ATL evening and JFK morning banks (ORD → ATL → JFK, DEN
+// intermediate). Deadhead-first crew-position recovery + reserve bridge with
+// Level 1 zero-sum containment and a 24–72h next-day restart watch.
+// Exports follow the shared workflow-panel contract (SCB_ prefix).
 
 export const SCB_ACCENT = 'red'
 
@@ -21,7 +23,7 @@ export const SCB_SIGNAL = {
     { label: 'Response window', value: 'First replacement report in 2h 40m' },
   ],
   sourceChips: ['CREW', 'NETWORK', 'AIRCRAFT', 'PASSENGER', 'EXTERNAL', 'DERIVED'],
-  detail: 'Crew mid-rotation at ORD, next outbound cancels, remaining legs go open and crew is stuck out of domicile needing deadhead. Recovery choices can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2).',
+  detail: 'Fourteen crews are mid-rotation at ORD when DL1476 ORD–DEN cancels on the ground stop. Their remaining legs go open and the crews are stuck out of domicile, needing deadhead repositioning and a legal rest reset before they can operate again. Reserve-only recovery would force pulls from ATL/JFK bank pairings (Level 1), and crews arriving after the legal rest cutoff would break the JFK next-day first bank (Level 2).',
   conditions: [
     'ORD outbound cancellation opens remaining rotation legs,',
     'Stranded crews are out of domicile and need deadhead + legal reset,',
@@ -33,8 +35,8 @@ export const SCB_SIGNAL = {
 
 export const SCB_DISRUPTION = {
   detected: '15:20 ET',
-  source: 'ORD weather + ATC ground stop cancels outbound ORD–DEN leg',
-  cascade: 'ORD source event → ATL crew displacement → JFK next-day exposure',
+  source: 'ORD convective weather + ATC ground stop cancels outbound DL1476 ORD–DEN 16:10, stranding 14 crews (62 members) mid-rotation',
+  cascade: 'ORD source cancellation → open ATL-bank legs (crew displaced) → JFK next-day first-bank exposure',
 }
 
 export const SCB_IMPACT = [
@@ -78,13 +80,7 @@ export const SCB_CASCADE = [
   { level: 'Level 2 — Cross-hub contamination', status: 'Watch', color: 'yellow', trigger: 'JFK next-day starts lack legal crew or aircraft block', action: 'Activate 24–72h restart simulation' },
 ]
 
-export const SCB_PRECEDENTS = [
-  { episode: 'ORD winter hub closure replay', similarity: 86, pattern: 'Stranded crews + deadhead dependency', outcome: 'Level 1 spread to ATL', lesson: 'Start deadhead earlier; protect donor hubs' },
-  { episode: 'ATL bank crew displacement', similarity: 78, pattern: 'Crew pull created secondary open trips', outcome: '6 additional delays', lesson: 'Block donor swaps unless net-positive' },
-  { episode: 'JFK next-day restart miss', similarity: 71, pattern: 'Crew arrived after legal rest cutoff', outcome: 'Morning bank delay', lesson: 'Trigger overnight reset before midnight' },
-]
-
-export const SCB_HYPOTHESIS = 'If Delta repositions stranded ORD crews with deadhead-first moves plus a reserve bridge, protects the ATL/JFK connection banks, and blocks harmful donor pulls, then it can contain Level 1 and prevent Level 2 next-day contamination while limiting deadhead and cancellation cost.'
+export const SCB_HYPOTHESIS = 'Repositioning the stranded ORD crews with deadhead-first moves plus a legal reserve bridge, protecting the ATL evening and JFK morning connection banks, and blocking harmful donor pulls contains Level 1 and prevents Level 2 next-day contamination — while holding deadhead and cancellation cost within the recovery cap.'
 
 // ── Screen 2 — Objectives & KPIs ────────────────────────────────────────────
 export const SCB_PRIMARY_OBJECTIVES = [
@@ -172,12 +168,12 @@ export const SCB_SCENARIO = {
   method: 'Event-triggered live simulation + 24–72h restart watch; crew legality, deadhead feasibility, reserve bridge, and donor-risk scoring across Crew / Network / Aircraft / Passenger twins.',
 }
 export const SCB_SCOPE = [
-  { item: 'Stranded crews', value: '14 crews / 62 crew members' },
+  { item: 'Stranded crews', value: '14 crews / 62 members (8 cockpit · 6 FA pairings)' },
   { item: 'Remaining legs', value: '31 legs across ORD / ATL / JFK / DEN' },
+  { item: 'Reserve pools', value: 'ATL 0.76x (12 legal) · JFK 0.88x (9 legal)' },
   { item: 'Hubs', value: 'ORD source · ATL/JFK downstream · DEN intermediate' },
   { item: 'Cascade state', value: 'Level 0 + Level 1 active · Level 2 watch' },
-  { item: 'Decision deadline', value: 'First ATL departure in 2h 40m' },
-  { item: 'Horizon', value: 'Live + 24–72h restart watch' },
+  { item: 'Decision deadline', value: 'First ATL departure (DL2537) in 2h 40m' },
 ]
 export const SCB_VALIDATION = [
   'Crew duty / rest legality checked',
@@ -266,8 +262,8 @@ export const SCB_RECOMMENDATIONS = [
       { kind: 'Reserve', kindColor: 'orange', resource: 'R-ATL-08…16 (9 ATL reserves)', from: 'ATL reserve pool', to: 'open ATL-bank legs', flight: 'DL2537 ATL–MCO, DL2611 ATL–BOS, DL2705 ATL–GSP', action: 'Reserve-first coverage, legal + qualified' },
       { kind: 'Reserve', kindColor: 'orange', resource: 'R-JFK-03…07 (5 JFK reserves)', from: 'JFK reserve pool', to: 'open JFK evening legs', flight: 'DL1729 JFK–BOS 20:15', action: 'Cover the JFK evening bank locally' },
       { kind: 'Stranded crew', kindColor: 'red', resource: '10 crew — cockpit P4471 + FA P4488', from: 'ORD (stuck)', to: 'ATL / JFK domicile', flight: 'DHD DL2214 ORD–ATL, DHD DL1885 ORD–JFK', action: 'Minimal deadhead home; remaining stranded crew held for next wave' },
-      { kind: 'Flight', kindColor: 'yellow', resource: '7 flights (ATL bank)', to: 'held / delayed', action: 'Delay to fit reserve report windows' },
-      { kind: 'Passenger', kindColor: 'blue', resource: 'ATL-bank pax', to: 'protected connections', action: 'Reaccommodate where holds slip' },
+      { kind: 'Flight', kindColor: 'yellow', resource: '7 ATL-bank flights (DL2537, DL2611, DL2705, +4)', to: 'held / delayed', action: 'Delay to fit reserve report windows' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '≈1,180 ATL-bank pax', to: 'protected connections', action: 'Reaccommodate where holds slip' },
     ],
     confidence: '78% · faster same-day action',
     whyNot: 'Higher reserve depletion leaves less cover for later banks.',
@@ -375,7 +371,7 @@ export const SCB_FRONTIER = {
 // ── Screen 6 — Approval & Execution ─────────────────────────────────────────
 export const SCB_APPROVAL = {
   selected: 'Deadhead-heavy containment + reserve bridge',
-  action: 'Deadhead 20 crew ORD→ATL/JFK + 12 reserve bridge + delay 5 protected banks + 3 tail swaps + reaccommodate 520 pax',
+  action: 'Deadhead 20 crew ORD→ATL/JFK (P4471, P4488 first) + 12-reserve bridge (R-ATL/R-JFK) + hold 5 protected-bank flights ≤45 min + 3 tail swaps + reaccommodate 520 pax',
   summary: [
     { field: 'Decision owner', value: 'OCC duty manager' },
     { field: 'Approval type', value: 'Human, multi-role (crew · network · aircraft · pax)' },
@@ -384,13 +380,13 @@ export const SCB_APPROVAL = {
     { field: 'Audit status', value: 'Decision log will be created' },
   ],
   execItems: [
-    { item: 'Deadhead booking', target: 'Crew travel / scheduling', action: 'Book ORD→ATL/JFK deadhead for 20 crew' },
-    { item: 'Reserve assignment', target: 'Crew scheduling', action: 'Assign 12 legal reserves as bridge coverage' },
-    { item: 'Pairing update', target: 'Crew ops', action: 'Rebuild remaining rotation legs' },
-    { item: 'Flight delay plan', target: 'OCC / network ops', action: 'Delay 5 protected-bank flights ≤45 min' },
-    { item: 'Tail swap', target: 'Aircraft planning / maintenance', action: 'Swap 3 ready tails into protected rotations' },
-    { item: 'Passenger recovery', target: 'Reaccommodation', action: 'Protect 520 pax + priority connections' },
-    { item: 'Audit trail', target: 'Decision log', action: 'Store rationale, constraints, rejected options, approvals' },
+    { item: 'Deadhead booking', target: 'Crew travel / scheduling', action: 'Book DHD DL2214 ORD–ATL (P4471) + DHD DL1885 ORD–JFK (P4488); 20 crew total, critical pairing first' },
+    { item: 'Reserve assignment', target: 'Crew scheduling', action: 'Assign R-ATL-08/12 → DL2537 and R-JFK-03/05 → DL1729; 12 legal reserves as bridge' },
+    { item: 'Pairing update', target: 'Crew ops', action: 'Reassign FO C-ATL-2246 within P4462 → DL2611; rebuild 6 remaining rotations' },
+    { item: 'Flight delay plan', target: 'OCC / network ops', action: 'Hold DL2537, DL2611, DL2705, DL1729, DL2390 ≤45 min to align crew + reserves' },
+    { item: 'Tail swap', target: 'Aircraft planning / maintenance', action: 'Swap N823DN + 2 ready tails into protected ATL/JFK rotations' },
+    { item: 'Passenger recovery', target: 'Reaccommodation', action: 'Protect 520 pax on held/covered legs, premium and international first' },
+    { item: 'Audit trail', target: 'Decision log', action: 'Store rationale, constraints, rejected options, and multi-role approvals' },
   ],
   rationale: 'Best Level 2 prevention. Uses deadhead + reserve bridge within the window, keeps reserves for later banks, and protects the ATL/JFK connection banks. Higher deadhead cost is offset by avoided next-day contamination.',
   constraints: ['Crew legality / rest', 'Crew qualification / type rating', 'Deadhead arrival feasibility', 'Donor-flight risk guardrail (safe swaps only)', 'Aircraft maintenance readiness', 'Passenger priority rules', 'Deadhead cost cap', 'Human approval'],

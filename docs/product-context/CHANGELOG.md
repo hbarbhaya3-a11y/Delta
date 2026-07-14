@@ -5,6 +5,21 @@
 
 ---
 
+## Session 17 — Remove Historical Precedents + Signal 5 Production Polish — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 11.70s
+
+### Changed
+- **Removed the "Historical similar episodes" (precedents) section** from Screen 1 of the shared `StoreServiceRiskPanel` — it no longer renders for any signal. The `PRECEDENTS` data resolver remains a harmless passthrough; per-scenario `*_PRECEDENTS` exports are now unused (removed for Signal 5).
+- **Signal 5 (Mid-Rotation Hub Stranding) made production-grade end-to-end**:
+  - Dropped the "illustrative UI mock data" disclaimer from the module header; rewrote it as a real operating scenario.
+  - Named the source event (`DL1476 ORD–DEN 16:10` ground-stop cancellation) consistently across disruption, signal detail, and scope.
+  - Rewrote the signal `detail` and `hypothesis` in confident operational language (why deadhead + legal rest reset is required, how reserve-only recovery forces Level 1 pulls, how late rest breaks the JFK first bank).
+  - Aligned the Screen 6 execution package with the concrete IDs already in the assignments — deadhead flights (`DHD DL2214`, `DHD DL1885`), reserve→leg mapping (`R-ATL-08/12 → DL2537`, `R-JFK-03/05 → DL1729`), pairing reassignment (`FO C-ATL-2246 within P4462 → DL2611`), tail swap (`N823DN`).
+  - Quantified vague cells (`≈1,180 ATL-bank pax`, flight numbers on held legs) and added reserve-pool depth to scope (`ATL 0.76x / 12 legal · JFK 0.88x / 9 legal`).
+  - Removed `SCB_PRECEDENTS`.
+
 ## Session 16 — Assignment Tables Across All 9 Signals + Modal Cleanup — 2026-07-14
 
 ### Build Status

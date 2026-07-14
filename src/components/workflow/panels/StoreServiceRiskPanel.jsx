@@ -368,19 +368,6 @@ function Screen1({ onContinue }) {
         </Paper>
       )}
 
-      {/* Historical precedents (optional) */}
-      {D.PRECEDENTS && (
-        <Paper withBorder p="md" radius="md">
-          <SectionHead icon={IconRadar} title="Historical similar episodes" />
-          <Table fz="xs" mt="xs" withTableBorder>
-            <Table.Thead><Table.Tr><Table.Th>Episode</Table.Th><Table.Th>Match</Table.Th><Table.Th>Pattern</Table.Th><Table.Th>Outcome</Table.Th><Table.Th>Lesson</Table.Th></Table.Tr></Table.Thead>
-            <Table.Tbody>{D.PRECEDENTS.map(p => (
-              <Table.Tr key={p.episode}><Table.Td fw={600}>{p.episode}</Table.Td><Table.Td><Badge size="xs" variant="light" color={accent}>{p.similarity}%</Badge></Table.Td><Table.Td>{p.pattern}</Table.Td><Table.Td c="dimmed">{p.outcome}</Table.Td><Table.Td>{p.lesson}</Table.Td></Table.Tr>
-            ))}</Table.Tbody>
-          </Table>
-        </Paper>
-      )}
-
       <Paper withBorder radius="md" p="md" style={{ borderLeft: `3px solid var(--mantine-color-${accent}-5)`, background: `var(--mantine-color-${accent}-light)` }}>
         <Group gap="xs" mb={4}><ThemeIcon size={22} radius="md" variant="gradient" gradient={{ from: accent, to: 'orange', deg: 135 }}><IconTargetArrow size={13} color="white" /></ThemeIcon><Text fw={700} size="sm">Recommended Hypothesis</Text></Group>
         <Text size="sm" style={{ lineHeight: 1.7 }}>{D.HYPOTHESIS}</Text>
