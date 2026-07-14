@@ -5,6 +5,23 @@
 
 ---
 
+## Session 11 — Signal 3 (Uncovered Trip Detected) Dedicated Deep Dive — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 7,694 modules, 0 errors, built in 18.49s
+
+### Added
+- **Signal 3 — Uncovered Trip Detected — Time-to-Departure Critical** now has its own dedicated 7-screen deep-dive use case `uc-uncovered-trip` (`src/data/scenarioUncoveredTrip.js`, `SUT_*`), following the Misconnect / Cross-Hub pattern. Scenario: 9 concurrent uncovered trips at ATL after crew sick calls + ~2% voluntary acceptance, coupled to JFK/LGA/MCO/DTW under T-5h pressure. Event-triggered live simulation, speed-first / legality-gated / network-aware, reserve-first coverage that blocks harmful donor swaps to prevent Level 1. Coverage 46% no action → 78% with plan, 6 trips inside T-5h, 1,860 pax at risk, 540 misconnects, 4 coupled tails, L0 active → L1 trigger risk 90–120 min.
+  - Screen 1 populates all optional deep-dive blocks — signal metrics (7-of-14 feasible reserves, 11 swap candidates, 6 deadhead candidates, cost $650K–$1.4M), coupled-hub table, cascade logic (L0 active / L1 watch / L2 not active), root-cause breakdown (crew 52 / network 18 / pax 13 / aircraft 11 / ATC 6), historical episodes.
+  - Screens 2–7: objectives/KPIs (reliability 40 / legality 25 / CX 15 / resource 10 / cost 10), 15 recovery levers across 4 groups (crew / network / aircraft / passenger+cost+recovery), summary + assumptions, 3 ranked recommendations (Reserve-first / Swap-conserve / Protect-bank), OCC multi-role SLA-tracked approval, and test & learn producing the "T-5h Multi-Open Trip Recovery — ATL Bank (Reserve-First)" playbook.
+- Wired into `StoreServiceRiskPanel` `MODULES` (`uc-uncovered-trip` → `SUT`), added `UC_UNCOVERED_TRIP` to `usecases.js` and the `useCases` array.
+
+### Changed
+- **Signal 3 card re-scenarioed and routed to the bespoke flow** (`NRS_LIVE_SIGNALS`): `linkedUseCaseId` now `uc-uncovered-trip`; 9 open trips (6 inside T-5h), coverage 46%→78%, acceptance ~2%, T-5h / T-2h execution-lock window, refreshed trend and tags.
+
+### Watch List
+- Dedicated flows now exist for Signals 1, 2, 3, 5, 6, and 7; the remaining three signals (4, 8, 9) still route to UC1. Follow the same pattern to add more.
+
 ## Session 10 — Signal 7 (Passenger Misconnect Exposure) Dedicated Deep Dive — 2026-07-14
 
 ### Build Status

@@ -1169,6 +1169,33 @@ const UC_MISCONNECT = {
   ],
 }
 
+// ── Signal 3 — Uncovered Trip Detected — Time-to-Departure Critical (7-screen) ─
+// Renders StoreServiceRiskPanel with open-trip recovery data (scenarioUncoveredTrip.js).
+const SUT_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_UNCOVERED_TRIP = {
+  id: 'uc-uncovered-trip',
+  title: 'ATL Multi-Open Trip Recovery — T-5h',
+  subtitle: '9 concurrent uncovered trips at ATL after sick calls + ~2% voluntary acceptance, coupled to JFK/LGA/MCO/DTW — simulate immediately, cover critical trips legally before the T-2h lock, prevent Level 1',
+  color: 'red',
+  outcome: 'Critical trips covered legally · Level 1 prevented',
+  outcomeDetail: 'Reserve-first coverage, harmful donor swaps blocked, tails and connections protected, cancellations and misconnects cut versus waiting on ~2% pickup',
+  duration: 'T-5h detection → T-3h approval → T-2h execution lock',
+  variants: '4 lever groups × 15 levers · reserve-first / swap-conserve / protect-bank strategies',
+  agentChain: ['Crew Coverage Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SUT_STEP(1, 'sut-1', 'Signal Deep Dive', 'SENSE', 'Crew Coverage Sentinel'),
+    SUT_STEP(2, 'sut-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SUT_STEP(3, 'sut-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SUT_STEP(4, 'sut-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SUT_STEP(5, 'sut-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SUT_STEP(6, 'sut-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SUT_STEP(7, 'sut-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1201,6 +1228,7 @@ export const useCases = [
   UC_HUB_CLOSURE,
   UC_CROSS_HUB,
   UC_MISCONNECT,
+  UC_UNCOVERED_TRIP,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
