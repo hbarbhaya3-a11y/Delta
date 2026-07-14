@@ -14,6 +14,7 @@ import { useUseCase } from '../../../contexts/UseCaseContext'
 import * as SSR from '../../../data/storeServiceRisk'
 import * as NRS from '../../../data/networkRiskSignals'
 import * as SCB from '../../../data/scenarioBStranding'
+import * as SHC from '../../../data/scenarioHubClosure'
 import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelUpdateGrid } from '../../viz/ScmViz'
 
 // ── Data resolution ─────────────────────────────────────────────────────────
@@ -23,6 +24,7 @@ import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelU
 const MODULES = {
   'uc-network-risk-operations': { prefix: 'NRS', mod: NRS },
   'uc-mid-rotation-stranding': { prefix: 'SCB', mod: SCB },
+  'uc-hub-closure': { prefix: 'SHC', mod: SHC },
 }
 function useData() {
   const { activeUseCase } = useUseCase()

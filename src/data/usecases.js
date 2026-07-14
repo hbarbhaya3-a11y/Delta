@@ -1088,6 +1088,33 @@ const UC_SCENARIO_B = {
   ],
 }
 
+// ── Signal 2 — Hub Closure Likelihood (7-screen deep dive) ───
+// Renders StoreServiceRiskPanel with hub-closure data (scenarioHubClosure.js).
+const SHC_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
+  id, label, stage, page: 'market-signals', panelType: 'store_service_risk', actor, agent,
+  headline: label, panelData: { screen: n },
+})
+const UC_HUB_CLOSURE = {
+  id: 'uc-hub-closure',
+  title: 'ATL Hub Closure — Weather Window',
+  subtitle: 'Forecast-led pre-disruption: severe storms + ATC ground delay threaten the ATL evening/overnight bank — pre-cancel + reserve pre-positioning to contain at Level 0',
+  color: 'red',
+  outcome: 'Disruption contained at Level 0 · cascade prevented',
+  outcomeDetail: 'Critical banks protected, reserves pre-positioned, cancellations minimized, misconnects and cost cut versus reacting late',
+  duration: 'T-30h forecast → T-6h execution',
+  variants: '4 lever groups × 9 levers · pre-cancel / delay / alternate-hub strategies',
+  agentChain: ['Hub Weather Sentinel', 'Context Decoder', 'TwinX Simulation', 'Decision Owner', 'Learning System'],
+  steps: [
+    SHC_STEP(1, 'shc-1', 'Signal Deep Dive', 'SENSE', 'Hub Weather Sentinel'),
+    SHC_STEP(2, 'shc-2', 'Objectives & KPIs', 'SENSE', 'Context Decoder'),
+    SHC_STEP(3, 'shc-3', 'Simulation Levers', 'SIMULATE', 'TwinX Simulation'),
+    SHC_STEP(4, 'shc-4', 'Simulation Summary', 'SIMULATE', 'TwinX Simulation'),
+    SHC_STEP(5, 'shc-5', 'Optimization Results', 'SELECT', 'TwinX Simulation'),
+    SHC_STEP(6, 'shc-6', 'Approval & Execution', 'EXECUTE', 'Decision Owner', 'human'),
+    SHC_STEP(7, 'shc-7', 'Test & Learn', 'LEARN', 'Learning System'),
+  ],
+}
+
 // ── Inventory Imbalance — Excess Upstream, Shortage Downstream (MEIO, 7 steps) ─
 const II_STEP = (n, id, label, stage, agent, actor = 'agent') => ({
   id, label, stage, page: 'market-signals', panelType: 'inventory_imbalance', actor, agent,
@@ -1117,6 +1144,7 @@ const UC_INVENTORY_IMBALANCE = {
 export const useCases = [
   UC_STORE_SERVICE_RISK,
   UC_SCENARIO_B,
+  UC_HUB_CLOSURE,
   UC_INVENTORY_IMBALANCE,
   UC_ADVISORY_READINESS,
   UC_IDLE_CASH,
