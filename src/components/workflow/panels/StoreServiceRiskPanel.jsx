@@ -130,62 +130,28 @@ function downloadPlan(r) {
   URL.revokeObjectURL(url)
 }
 
-// ── Before → after KPI bars (built from a recommendation's own kpi rows) ─────
-// Parses the leading number out of each b/a string so mixed units ($/%/counts)
-// still render as a comparable pair of bars. Rows without a numeric baseline
-// (e.g. "—") fall back to a value-only chip.
-function parseNum(v) {
-  if (v == null) return null
-  const m = String(v).replace(/,/g, '').match(/-?\d+(\.\d+)?/)
-  return m ? parseFloat(m[0]) : null
-}
-function BeforeAfterKpis({ rows, tone = 'orange' }) {
-  return (
-    <Stack gap={8}>
-      {rows.map(r => {
-        const b = parseNum(r.b), a = parseNum(r.a)
-        const max = Math.max(Math.abs(b ?? 0), Math.abs(a ?? 0)) || 1
-        const improved = !r.neg
-        return (
-          <Box key={r.k}>
-            <Group justify="space-between" gap="xs" mb={2}>
-              <Text size="10px" fw={600}>{r.k}</Text>
-              <Group gap={6} wrap="nowrap">
-                <Text size="10px" c="dimmed">{r.b}</Text>
-                <IconArrowRight size={10} />
-                <Text size="10px" fw={700} c={improved ? 'teal' : tone}>{r.a}</Text>
-                {r.d && <Badge size="xs" variant="light" color={improved ? 'teal' : tone}>{r.d}</Badge>}
-              </Group>
-            </Group>
-            {b != null && a != null && (
-              <Stack gap={2}>
-                <Progress value={(Math.abs(b) / max) * 100} color="gray" size={6} radius="xl" />
-                <Progress value={(Math.abs(a) / max) * 100} color={improved ? 'teal' : tone} size={6} radius="xl" />
-              </Stack>
-            )}
-          </Box>
-        )
-      })}
-      <Group gap="md" mt={2}>
-        <Group gap={4}><Box w={9} h={6} style={{ borderRadius: 3, background: 'var(--mantine-color-gray-5)' }} /><Text size="9px" c="dimmed">Baseline</Text></Group>
-        <Group gap={4}><Box w={9} h={6} style={{ borderRadius: 3, background: `var(--mantine-color-${tone}-6)` }} /><Text size="9px" c="dimmed">After plan</Text></Group>
-      </Group>
-    </Stack>
-  )
-}
-
 // ── Assignment table — who/what moves where (crew, reserves, tails, flights) ──
+// Each row: { kind, kindColor, resource, from, to, action, flight? }. The
+// "On flight / pairing" column renders only when at least one row carries a
+// `flight` value, so leaner signals keep a 3-column layout.
 function AssignmentTable({ rows, tone = 'orange' }) {
+  const showFlight = rows.some(r => r.flight)
   return (
     <Table fz="xs" withTableBorder withColumnBorders verticalSpacing={4}>
       <Table.Thead>
-        <Table.Tr><Table.Th>Resource</Table.Th><Table.Th>From → To</Table.Th><Table.Th>Action</Table.Th></Table.Tr>
+        <Table.Tr>
+          <Table.Th>Resource</Table.Th>
+          <Table.Th>From → To</Table.Th>
+          {showFlight && <Table.Th>On flight / pairing</Table.Th>}
+          <Table.Th>Action</Table.Th>
+        </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
         {rows.map((r, i) => (
           <Table.Tr key={i}>
             <Table.Td><Badge size="xs" variant="light" color={r.kindColor || tone}>{r.kind}</Badge> <Text span fw={600} size="xs">{r.resource}</Text></Table.Td>
             <Table.Td>{r.from ? <Text size="xs"><Text span c="dimmed">{r.from}</Text> → <Text span fw={600}>{r.to}</Text></Text> : <Text span fw={600} size="xs">{r.to}</Text>}</Table.Td>
+            {showFlight && <Table.Td>{r.flight ? <Text span size="xs" ff="monospace" fw={600}>{r.flight}</Text> : <Text span size="xs" c="dimmed">—</Text>}</Table.Td>}
             <Table.Td>{r.action}</Table.Td>
           </Table.Tr>
         ))}
@@ -246,12 +212,6 @@ function StrategyModal({ reco, onClose }) {
               <Box>
                 <Text fw={700} size="xs" c="dimmed" tt="uppercase" mb={4}>Network flows — before vs after</Text>
                 <BeforeAfterFlow nodes={D.NETWORK.nodes} before={D.NETWORK.before} after={D.NETWORK.afterById[reco.id] || D.NETWORK.afterById.combined} />
-              </Box>
-            )}
-            {reco.kpi && (
-              <Box>
-                <Text fw={700} size="xs" c="dimmed" tt="uppercase" mb={4}>KPIs — before vs after</Text>
-                <BeforeAfterKpis rows={reco.kpi} tone={reco.tone} />
               </Box>
             )}
             {D.FRONTIER && (
@@ -601,7 +561,6 @@ function Screen5({ ws, setWs, onContinue }) {
   return (
     <Stack gap="md">
       <StrategyModal reco={planReco} onClose={() => setPlanReco(null)} />
-      <Alert color="gray" variant="light" p="xs"><Text size="10px">Illustrative values calibrated to the source-defined KPIs and levers — not actual operational run output.</Text></Alert>
       <Paper withBorder p="md" radius="md">
         <Text fw={700} size="xs" mb="xs">Baseline snapshot — no action</Text>
         <SimpleGrid cols={4} spacing="xs">

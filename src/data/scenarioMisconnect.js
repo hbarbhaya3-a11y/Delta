@@ -212,6 +212,13 @@ export const SMX_RECOMMENDATIONS = [
     trigger: 'ATL bank compression is active with JFK spillover and BOS backlog forming.',
     leversUsed: 'Hold 8 high-leverage flights ≤22 min · reaccommodate 720 · protect 386 critical · validate crew / tail / gate',
     impacted: '18 connection-critical flights · 3 hubs · 720 reaccommodated · 1,460 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '8 high-leverage flights', to: '≤22 min hold', action: 'Hold to protect the most connections per minute; protect ATL/JFK banks' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '386 critical journeys', to: 'protected list', action: 'Lock premium / international / tight / low-seat first' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '720 pax', to: 'earliest onward itinerary', action: 'Targeted reaccommodation by segment priority' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Held-flight crews', to: 'legality-checked', action: 'Confirm holds stay within duty / rest' },
+      { kind: 'Gate', kindColor: 'orange', resource: 'Gates for critical flows', to: 'reserved', action: 'Hold gate feasibility ≤3 conflicts for connection banks' },
+    ],
     confidence: '86% · best CX + network balance',
     whyNot: 'Moderate hold minutes on selected flights.',
     recommends: [
@@ -256,6 +263,12 @@ export const SMX_RECOMMENDATIONS = [
     trigger: 'Holding is constrained by crew legality or tail readiness; minimize network disruption.',
     leversUsed: 'Reaccommodate 1,050 early · hold only 3 flights · prioritize premium / intl · selective vouchers',
     impacted: '18 connection-critical flights · 1,050 reaccommodated · 1,460 pax',
+    assignments: [
+      { kind: 'Passenger', kindColor: 'blue', resource: '1,050 pax', to: 'earlier alternate itineraries', action: 'Front-load reaccommodation, premium / international first' },
+      { kind: 'Flight', kindColor: 'grape', resource: '3 highest-leverage flights', to: '≤ short hold', action: 'Minimal holds to limit network disruption' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Displaced pax', to: 'selective vouchers', action: 'Trigger vouchers where reaccommodation is tight' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Held-flight crews', to: 'legality-checked', action: 'Confirm the few holds remain legal' },
+    ],
     confidence: '78% · lowest network disruption',
     whyNot: 'Higher passenger recovery cost from broader reaccommodation.',
     recommends: [
@@ -298,6 +311,12 @@ export const SMX_RECOMMENDATIONS = [
     trigger: 'ATL / JFK network stability is deteriorating; protect the operation over passenger continuity.',
     leversUsed: 'Hold only 2 flights · thin 2 low-connection legs · reaccommodate remaining · protect crew / tail rotations',
     impacted: '18 connection-critical flights · 2 thinned legs · 1,460 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '2 highest-leverage flights', to: 'held', action: 'Minimal holds to protect network stability' },
+      { kind: 'Flight', kindColor: 'yellow', resource: '2 low-connection legs', to: 'thinned', action: 'Free crew + tails; protect rotations' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Remaining at-risk pax', to: 'alternate itineraries', action: 'Reaccommodate; premium + international protection on' },
+      { kind: 'Tail', kindColor: 'orange', resource: 'Coupled rotations', to: 'protected', action: 'Preserve tail/crew continuity over passenger holds' },
+    ],
     confidence: '82% · best operational stability',
     whyNot: 'More passenger misconnects than the balanced option.',
     recommends: [

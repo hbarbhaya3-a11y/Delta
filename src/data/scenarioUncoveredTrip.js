@@ -204,6 +204,13 @@ export const SUT_RECOMMENDATIONS = [
     trigger: '9 open trips active at ATL with ~2% acceptance and 6 critical inside T-5h.',
     leversUsed: 'Assign 7 reserves · delay DL1842/DL501 25–35 min · 2 tail swaps · reaccommodate 420',
     impacted: '9 open trips · 4 coupled hubs · 420 reaccommodated · 1,860 pax',
+    assignments: [
+      { kind: 'Reserve', kindColor: 'red', resource: '7 feasible reserves', from: 'ATL / JFK pools', to: '6 critical open trips', action: 'Cover before the T-2h execution lock, legal + qualified' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Safe swaps only', to: 'connection-heavy legs', action: 'Reassign without opening donor trips (block harmful pulls)' },
+      { kind: 'Crew', kindColor: 'orange', resource: '6 deadhead crew', from: 'JFK / LGA / MCO / DTW', to: 'ATL', action: 'Reposition to cover the remaining uncovered trips' },
+      { kind: 'Flight', kindColor: 'grape', resource: 'Trips awaiting reserve report', to: 'targeted delay', action: 'Hold within the window to fit reserve arrival' },
+      { kind: 'Passenger', kindColor: 'blue', resource: '420 at-risk pax', to: 'protected connections', action: 'Early reaccommodation, premium first' },
+    ],
     confidence: '88% · best legality + speed + CX balance',
     whyNot: 'Uses most of the reserve pool.',
     recommends: [
@@ -248,6 +255,12 @@ export const SUT_RECOMMENDATIONS = [
     trigger: 'Preserving the reserve pool for later banks is the priority.',
     leversUsed: '5 reserves · 3 safe swaps · 3 deadheads · delay 4 flights',
     impacted: '9 open trips · 4 coupled hubs · 1,860 pax',
+    assignments: [
+      { kind: 'Crew', kindColor: 'red', resource: '11 swap candidates (safe swaps)', to: 'open trips', action: 'Cover trips by reshuffling on-duty crew to conserve reserves' },
+      { kind: 'Reserve', kindColor: 'orange', resource: 'Conserved reserve subset', to: 'held for later banks', action: 'Keep reserve depth for the next wave' },
+      { kind: 'Crew', kindColor: 'orange', resource: '6 deadhead crew', from: 'coupled hubs', to: 'ATL', action: 'Reposition to backfill swap donors' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'At-risk pax', to: 'protected connections', action: 'Reaccommodate where swaps shift timing' },
+    ],
     confidence: '73% · preserves reserve pool',
     whyNot: 'Higher donor-flight risk than the reserve-first option.',
     recommends: [
@@ -290,6 +303,12 @@ export const SUT_RECOMMENDATIONS = [
     trigger: 'Unresolved open trips remain after T-3h and the core bank must be protected.',
     leversUsed: 'Cancel DL3108 + 1 low-load ATL turn · reassign crew to DL1842/DL501 · reaccommodate 310',
     impacted: '9 open trips · 2 planned cancellations · 1,860 pax',
+    assignments: [
+      { kind: 'Flight', kindColor: 'grape', resource: '2 low-criticality flights', to: 'planned cancellation', action: 'Release their crews to protect the core ATL bank' },
+      { kind: 'Crew', kindColor: 'red', resource: 'Released crews', from: '2 cancelled legs', to: 'core ATL bank open trips', action: 'Reassign to protect connection-heavy departures' },
+      { kind: 'Reserve', kindColor: 'orange', resource: 'Preserved reserves', to: 'critical open trips', action: 'Hold reserve pool by cutting demand first' },
+      { kind: 'Passenger', kindColor: 'blue', resource: 'Cancelled-flight pax', to: 'alternate itineraries', action: 'Proactive reaccommodation before departure' },
+    ],
     confidence: '81% · lowest unresolved open trips',
     whyNot: 'Visible cancellations affect CX.',
     recommends: [

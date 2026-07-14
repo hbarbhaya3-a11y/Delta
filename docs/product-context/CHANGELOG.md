@@ -5,6 +5,21 @@
 
 ---
 
+## Session 16 — Assignment Tables Across All 9 Signals + Modal Cleanup — 2026-07-14
+
+### Build Status
+- `npm run build` — **PASSED** — 0 errors, built in 20.91s
+
+### Added
+- **`assignments` now populated for all 9 signals** (3 recommendations each) so every "view strategy details" reads like a production-grade recovery plan. Extended the four that were missing: Signal 3 (`SUT`), Signal 4 (`SRB`), Signal 7 (`SMX`), Signal 8 (`STC`).
+- **`AssignmentTable` gained an optional "On flight / pairing" column** (renders only when a row carries a `flight` value) for production-grade, ID-level detail.
+- **Signal 5 (Mid-Rotation Stranding) assignments made production-grade**: concrete cockpit/FA pairing IDs (P4471, P4488, P4462), crew IDs (Capt C-ATL-2210, FO C-ATL-2214, lead F-JFK-3391), reserve IDs (R-ATL-08/12, R-JFK-03/05), deadhead flights showing how stranded crew returns to domicile (DHD DL2214 ORD–ATL, DHD DL1885 ORD–JFK), which reserve bridges which open leg (DL2537 ATL–MCO, DL1729 JFK–BOS), tail swap (N823DN → DL2611 ATL–BOS), and cancel/thin flight numbers. Signal 8 also carries tail IDs (N557DL/N621DL/N709DL/N312DL) mapped to specific flights.
+
+### Changed
+- **Removed the "KPIs — before vs after" section from the strategy modal** (and its `BeforeAfterKpis`/`parseNum` helpers) per feedback — KPI before/after already lives in the Screen 5 comparison table.
+- **Removed the "Illustrative values calibrated to the source-defined KPIs and levers…" disclaimer** from the optimization-results screen across all signals (shared `StoreServiceRiskPanel`).
+- Modal section order is now: Objective → Phased actions → What changes → **Assignments** → Network flows before/after (Signal 1) → Trade-off frontier → Guardrails → Expected impact.
+
 ## Session 15 — Holistic Strategy-Detail Modal for Signals 1, 2, 5, 6, 9 — 2026-07-14
 
 ### Build Status
