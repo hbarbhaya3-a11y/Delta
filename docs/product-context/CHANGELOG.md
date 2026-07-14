@@ -5,11 +5,11 @@
 
 ---
 
-## Session 6 — Airline Network Risk Signals + Signal 5 (Scenario B) Deep Dive + Delta Rebrand — 2026-07-14
+## Session 6 — Airline Network Risk Signals + Signal 5 Deep Dive + Delta Rebrand — 2026-07-14
 
 ### Build Status
 - `npm run build` — **PASSED** — 7,690 modules, 0 errors
-- End-to-end verified in-browser: Signal 5 (Scenario B) and Signal 1 (Network Risk Radar) both walk all 7 guided screens with 0 page errors.
+- End-to-end verified in-browser: Signal 5 (Mid-Rotation Hub Stranding) and Signal 1 (Network Risk Radar) both walk all 7 guided screens with 0 page errors.
 
 ### Added
 - **9 airline Network Risk signals** on the Sense/catalog page (`src/data/networkRiskSignals.js` → `NRS_LIVE_SIGNALS`, wired into `src/pages/UseCaseCatalog.jsx`): Network Risk Radar, Hub Closure Likelihood, Uncovered Trip Detected, Reserve Burn Rate, Mid-Rotation Hub Stranding, Cross-Hub Propagation, Passenger Misconnect Exposure, Tail-Crew Sync Gap, Binding Policy/Contract Constraint. Severity filter gained `CRITICAL`.
