@@ -123,7 +123,7 @@ export const SIGNAL_MID_ROTATION_STRANDING = {
   title: 'Mid-Rotation Hub Stranding Detected',
   severity: '🟠 High',
   signal_class: 'Scenario-onset',
-  description: 'Detects crews stranded mid-rotation due to hub cancellation. Starting point of Scenario B (Level 0). Remaining legs become open, and repositioning needs create downstream risk.',
+  description: 'Detects crews stranded mid-rotation due to hub cancellation. Starting point of the stranding cascade (Level 0). Remaining legs become open, and repositioning needs create downstream risk.',
   metrics: [
     { label: 'Stranded Crews', value: '#', description: 'Number of crews stranded' },
     { label: 'Stranded Crew-Hours', value: '#', description: 'Total duty hours at risk' },
@@ -141,7 +141,7 @@ export const SIGNAL_MID_ROTATION_STRANDING = {
     'Reserve assignment',
     'Crew reassignment',
   ],
-  ready_scenario: 'Scenario B — Stranded Hub Recovery',
+  ready_scenario: 'Stranded Hub Recovery',
 }
 
 // Signal 6: Cross-Hub Propagation Probability
@@ -817,13 +817,13 @@ export const NRS_LIVE_SIGNALS = [
   },
   {
     ucId: 'nrs-mid-rotation-stranding',
-    linkedUseCaseId: 'uc-scenario-b-stranding',
+    linkedUseCaseId: 'uc-mid-rotation-stranding',
     severity: 'CRITICAL', severityColor: 'red', stage: 'SENSE',
     title: 'Mid-Rotation Hub Stranding Detected',
     description: 'Crews stranded mid-rotation at ORD by weather/ATC; remaining legs open, ATL/JFK exposed.',
-    detail: 'Scenario B (Level 0 onset, upgraded to Critical as Level 1 activates): ORD outbound cancels, crew is stuck out of domicile needing deadhead, and remaining legs go open. Recovery can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2). Likely root causes: hub cancellation, weather/ATC, aircraft delay.',
+    detail: 'Level 0 onset, upgraded to Critical as Level 1 activates: ORD outbound cancels, crew is stuck out of domicile needing deadhead, and remaining legs go open. Recovery can create donor-flight risk (Level 1) and next-day cross-hub contamination (Level 2). Likely root causes: hub cancellation, weather/ATC, aircraft delay.',
     sourceChip: 'CREW · NETWORK · AIRCRAFT · PASSENGER',
-    agent: 'Scenario B Stranding Sentinel', date: '7/13/2026',
+    agent: 'Mid-Rotation Stranding Sentinel', date: '7/13/2026',
     metricValue: '14', metricUnit: 'stranded crews',
     metricStripLabel: 'Stranded crews', metricSub: '62 crew · 31 legs open',
     tags: ['STRANDED CREWS', '486 CREW-HOURS', '31 OPEN LEGS', 'DEADHEAD DEPENDENCY', 'L0/L1/L2 CASCADE'],
@@ -834,7 +834,7 @@ export const NRS_LIVE_SIGNALS = [
       { x: 'T-6', v: 0 }, { x: 'T-5', v: 2 }, { x: 'T-4', v: 5 },
       { x: 'T-3', v: 8 }, { x: 'T-2', v: 11 }, { x: 'T-1', v: 13 }, { x: 'Now', v: 14 },
     ],
-    scenario: 'Scenario B — Stranded Hub Recovery',
+    scenario: 'Stranded Hub Recovery',
     scenarioSub: 'ORD stranding → ATL displacement → JFK next-day → deadhead-first + reserve bridge + containment',
   },
   {
@@ -935,7 +935,7 @@ export const NRS_SIGNAL_PRIORITY = [
   { rank: 4, signal: 'Cross-Hub Propagation Probability', flow: 'UC1', reason: 'Cascade risk indicator' },
   { rank: 5, signal: 'Binding Policy / Contract Constraint', flow: 'UC1', reason: 'Feasibility gate for all scenarios' },
   { rank: 6, signal: 'Reserve Burn Rate Acceleration', flow: 'UC1', reason: 'Capacity depletion indicator' },
-  { rank: 7, signal: 'Mid-Rotation Hub Stranding', flow: 'UC1', reason: 'Scenario B onset condition' },
+  { rank: 7, signal: 'Mid-Rotation Hub Stranding', flow: 'UC1', reason: 'Mid-rotation stranding onset condition' },
   { rank: 8, signal: 'Passenger Misconnect Exposure', flow: 'UC1', reason: 'Customer impact assessment' },
   { rank: 9, signal: 'Tail-Crew Synchronization Gap', flow: 'UC1', reason: 'Cross-domain constraint detection' },
 ]

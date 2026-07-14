@@ -22,7 +22,7 @@ import { NetworkMap, BeforeAfterFlow, EfficientFrontier, WorkflowActions, ModelU
 // keys so every screen reads the same shape regardless of use case.
 const MODULES = {
   'uc-network-risk-operations': { prefix: 'NRS', mod: NRS },
-  'uc-scenario-b-stranding':    { prefix: 'SCB', mod: SCB },
+  'uc-mid-rotation-stranding': { prefix: 'SCB', mod: SCB },
 }
 function useData() {
   const { activeUseCase } = useUseCase()
