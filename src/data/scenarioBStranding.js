@@ -128,32 +128,21 @@ export const SCB_LEVER_GROUPS = [
       { id: 'reserveAssign', label: 'Local reserve assignment', control: 'select', options: ['0 reserves', '9 ATL + 5 JFK', '15 reserves', '20 reserves'], recommended: '9 ATL + 5 JFK', why: 'Legal, qualified, rested reserves only' },
       { id: 'crewSwap', label: 'Crew swap', control: 'select', options: ['Off', 'Safe swaps only', 'Aggressive'], recommended: 'Safe swaps only', why: 'Aggressive requires Level 1 approval' },
       { id: 'reassignPairing', label: 'Reassign within pairing', control: 'switch', recommended: true, onLabel: 'On (6 pairings)', why: 'Rebuild remaining rotation legs' },
-      { id: 'overnightRedeploy', label: 'Overnight redeployment', control: 'select', options: ['Off', 'Watch', 'Active'], recommended: 'Watch', why: 'Activate if Level 2 risk passes threshold' },
     ],
   },
   {
     group: 'B', title: 'Network protection levers', color: 'grape',
     levers: [
       { id: 'delayLegs', label: 'Delay remaining legs', control: 'select', options: ['0 min', '30 min', '45 min', '60 min'], recommended: '45 min', why: 'Delay without triggering a legality breach' },
-      { id: 'thinCancel', label: 'Cancel / thin candidates', control: 'select', options: ['0 legs', '4 low-criticality', '8 legs'], recommended: '4 low-criticality', why: 'OCC approval required' },
       { id: 'bankProtect', label: 'Bank protection', control: 'switch', recommended: true, onLabel: 'ATL evening + JFK morning', why: 'Protect connection-heavy banks' },
       { id: 'altRoute', label: 'Alternate routing', control: 'select', options: ['Off', 'DTW/MSP optional', 'Broad'], recommended: 'DTW/MSP optional', why: 'Avoid creating new bottlenecks' },
     ],
   },
   {
-    group: 'C', title: 'Aircraft levers', color: 'orange',
+    group: 'C', title: 'Passenger · cost levers', color: 'blue',
     levers: [
-      { id: 'tailSwap', label: 'Tail swap', control: 'select', options: ['0 tails', '3 tails', '6 tails'], recommended: '3 tails', why: 'Maintenance-ready tails only' },
-      { id: 'rotationReseq', label: 'Rotation resequencing', control: 'switch', recommended: true, onLabel: 'Selected rotations', why: 'Avoid aircraft-only fixes that worsen the crew gap' },
-    ],
-  },
-  {
-    group: 'D', title: 'Passenger · cost · recovery levers', color: 'blue',
-    levers: [
-      { id: 'reaccom', label: 'Early reaccommodation', control: 'select', options: ['0 pax', '520 pax', '1,000 pax'], recommended: '520 pax', why: 'Capacity-dependent' },
       { id: 'premiumProtect', label: 'Premium protection', control: 'switch', recommended: true, onLabel: 'On', why: 'Protect priority journeys' },
       { id: 'deadheadCap', label: 'Deadhead cost cap', control: 'select', options: ['$300K', '$420K', '$600K'], recommended: '$420K', why: 'Escalate if exceeded' },
-      { id: 'restartWatch', label: '24–72h restart watch', control: 'select', options: ['Off', 'Watch', 'Active'], recommended: 'Watch', why: 'Active if JFK launch risk persists' },
     ],
   },
 ]
